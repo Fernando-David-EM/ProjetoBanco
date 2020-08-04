@@ -1,15 +1,7 @@
 ﻿using Banco.Exceptions;
 using Banco.Model;
 using FirebirdSql.Data.FirebirdClient;
-using FirebirdSql.Data.Isql;
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Banco.Util
 {
@@ -36,7 +28,7 @@ namespace Banco.Util
 
         public T ExecuteSearchById(int id)
         {
-            _command = new FbCommand($"select * from {_tabela} where id = {id}");
+            _command = new FbCommand($"select * from {_tabela} where id = {id}", _connection, _transaction);
 
             var reader = _command.ExecuteReader();
 
@@ -53,7 +45,7 @@ namespace Banco.Util
 
         public void ExecuteDelete(int id)
         {
-            _command = new FbCommand($"delete from {_tabela} where id = {id}");
+            _command = new FbCommand($"delete from {_tabela} where id = {id}", _connection, _transaction);
 
             var resultado = _command.ExecuteNonQuery();
 
@@ -65,7 +57,7 @@ namespace Banco.Util
 
         public void ExecuteInsert(T item)
         {
-            _command = new FbCommand($"insert into {_tabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}");
+            _command = new FbCommand($"insert into {_tabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", _connection, _transaction);
 
             var resultado = _command.ExecuteNonQuery();
 
@@ -77,7 +69,7 @@ namespace Banco.Util
 
         public void ExecuteUpdate(T item)
         {
-            _command = new FbCommand($"update {_tabela} set {item.GetColumnEqualsValue()} where id = id");
+            _command = new FbCommand($"update {_tabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
 
             var resultado = _command.ExecuteNonQuery();
 
