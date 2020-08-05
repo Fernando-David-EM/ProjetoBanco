@@ -137,6 +137,7 @@
     <Compile Include="DAL\DaoLogin.cs" />
     <Compile Include="DAL\IDao.cs" />
     <Compile Include="Data\DataBase.cs" />
+    <Compile Include="Exceptions\CampoNaoPreenchidoException.cs" />
     <Compile Include="Exceptions\CpfExistenteException.cs" />
     <Compile Include="Exceptions\CpfInvalidoException.cs" />
     <Compile Include="Exceptions\FalhaEmAtualizarException.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Exceptions\SenhaIncorretaException.cs" />
     <Compile Include="Exceptions\UsuarioExistenteException.cs" />
     <Compile Include="Exceptions\UsuarioInexistenteException.cs" />
+    <Compile Include="Util\Formatacao.cs" />
     <Compile Include="View\TelaContas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +178,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\TelaContas.resx">
+      <DependentUpon>TelaContas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\TelaLogin.resx">
       <DependentUpon>TelaLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -195,7 +200,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

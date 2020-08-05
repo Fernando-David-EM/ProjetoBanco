@@ -10,7 +10,7 @@ namespace Banco.DAL
     interface IDao<T> where T : BaseModel
     {
         void Insert(T item);
-        void Update(T item);
+        void Update(T item, bool mudouPropriedadeDeValidacao);
         void Delete(T item);
         IEnumerable<T> GetAll();
         T GetByID(int id);

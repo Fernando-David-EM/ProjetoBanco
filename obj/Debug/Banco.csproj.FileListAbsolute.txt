@@ -87,3 +87,4 @@ C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csproj.CopyComplete
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.exe
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.pdb
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.TelaLogin.resources
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.View.TelaContas.resources

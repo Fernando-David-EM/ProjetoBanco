@@ -27,11 +27,13 @@ namespace Banco.DAL
 
         public virtual void Insert(T item)
         {
-            ValidaCondicao(item.GetPropriedadeDeValidacao());
+            ValidaCondicaoInsert(item.GetPropriedadeDeValidacao());
 
             var command = new FbCommand($"insert into {_nomeTabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", _connection, _transaction);
 
             var resultado = command.ExecuteNonQuery();
+
+            DataBase.CommitTransaction();
 
             if (resultado == 0)
             {
@@ -39,13 +41,15 @@ namespace Banco.DAL
             }
         }
 
-        public virtual void Update(T item)
+        public virtual void Update(T item, bool mudouPropriedadeDeValidacao)
         {
-            ValidaCondicao(item.GetPropriedadeDeValidacao());
+            ValidaCondicaoUpdate(item.GetPropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
 
-            var command = new FbCommand($"update {_nomeTabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
+            var command = new FbCommand($"update {_nomeTabela} set {item.GetColumnEqualsValue()} where id = {item.Id}", _connection, _transaction);
 
             var resultado = command.ExecuteNonQuery();
+
+            DataBase.CommitTransaction();
 
             if (resultado == 0)
             {
@@ -68,6 +72,8 @@ namespace Banco.DAL
             var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", _connection, _transaction);
 
             var resultado = command.ExecuteNonQuery();
+
+            DataBase.CommitTransaction();
 
             if (resultado == 0)
             {
@@ -132,6 +138,7 @@ namespace Banco.DAL
             return values;
         }
 
-        protected abstract void ValidaCondicao(string validacao);
+        protected abstract void ValidaCondicaoInsert(string validacao);
+        protected abstract void ValidaCondicaoUpdate(string validacao, bool mudouPropriedadeDeValidacao);
     }
 }

@@ -19,5 +19,7 @@ namespace Banco.Model
         public abstract string GetColumnEqualsValue();
 
         public abstract string GetPropriedadeDeValidacao();
+
+        public abstract string[] GetProperties();
     }
 }

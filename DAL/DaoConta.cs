@@ -31,7 +31,7 @@ namespace Banco.DAL
             }
         }
 
-        protected override void ValidaCondicao(string validacao)
+        protected override void ValidaCondicaoInsert(string validacao)
         {
             string cpf = validacao;
 
@@ -41,6 +41,31 @@ namespace Banco.DAL
 
                 //Só passa dessa linha se achar um item com aquele cpf
                 throw new CpfExistenteException(cpf);
+            }
+            catch (PesquisaSemSucessoException)
+            {
+                //Significa que não achou, ou seja, pode continuar a inserção
+            }
+
+            if (!ValidaCPF.IsCpf(cpf))
+            {
+                throw new CpfInvalidoException(cpf);
+            }
+        }
+
+        protected override void ValidaCondicaoUpdate(string validacao, bool mudouPropriedadeDeValidacao)
+        {
+            string cpf = validacao;
+
+            try
+            {
+                var conta = GetByCpf(cpf);
+
+                //Só passa dessa linha se achar um item com aquele cpf
+               if (mudouPropriedadeDeValidacao)
+                {
+                    throw new CpfExistenteException(cpf);
+                }
             }
             catch (PesquisaSemSucessoException)
             {
