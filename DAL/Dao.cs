@@ -17,6 +17,7 @@ namespace Banco.DAL
         protected FbConnection _connection = null;
         protected FbTransaction _transaction = null;
         protected readonly string _nomeTabela;
+
         protected Dao(string nomeTabela)
         {
             _connection = DataBase.GetConexao();
@@ -35,6 +36,7 @@ namespace Banco.DAL
                 throw new FalhaEmInserirException();
             }
         }
+
         public virtual void Update(T item)
         {
             var command = new FbCommand($"update {_nomeTabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
@@ -46,6 +48,7 @@ namespace Banco.DAL
                 throw new FalhaEmAtualizarException();
             }
         }
+
         public void Delete(T item)
         {
             try
@@ -91,6 +94,7 @@ namespace Banco.DAL
                 throw new PesquisaSemSucessoException();
             }
         }
+
         protected IEnumerable<T> Search(FbCommand command)
         {
             var reader = command.ExecuteReader();
@@ -105,6 +109,7 @@ namespace Banco.DAL
 
             return CreateList(objects);
         }
+
         protected IEnumerable<T> CreateList(List<object[]> objects)
         {
             List<T> contas = new List<T>();
