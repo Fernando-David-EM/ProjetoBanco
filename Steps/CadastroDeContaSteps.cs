@@ -14,9 +14,20 @@ namespace Banco.Steps
     [Binding]
     class CadastroDeContaSteps
     {
+        public static string NumericoAleatorio(int tamanho)
+        {
+            var chars = "0123456789";
+            var random = new Random();
+            var result = new string(
+                Enumerable.Repeat(chars, tamanho)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+            return result;
+        }
 
         DaoConta _daoConta;
         Conta _contaAtual;
+        string _cpfUsado;
 
         [Given(@"que estou logado como um administrador")]
         public void DadoQueEstouLogadoComoUmAdministrador()
@@ -27,20 +38,22 @@ namespace Banco.Steps
         [Given(@"clico no botao de cadastro de conta")]
         public void DadoClicoNoBotaoDeCadastroDeConta()
         {
-            _daoConta = new DaoConta(DataBase.GetConexao());
+            _daoConta = new DaoConta();
         }
 
         [Given(@"que preencho todos os campos corretamente")]
         public void DadoQuePreenchoTodosOsCamposCorretamente()
         {
+            _cpfUsado = NumericoAleatorio(11);
+
             _contaAtual = 
                 new Conta
                 (
                     "Fernando",
                     "30874856",
-                    "42706252014",
-                    500,
-                    1000
+                    _cpfUsado,
+                    500.0,
+                    1000.0
                 );
         }
 
@@ -53,7 +66,11 @@ namespace Banco.Steps
         [Then(@"uma nova conta deve ser cadastrada")]
         public void EntaoUmaNovaContaDeveSerCadastrada()
         {
-            
+            var pesquisaConta = _daoConta.GetByCpf(_cpfUsado);
+
+            _contaAtual.Id = pesquisaConta.Id;
+
+            Assert.AreEqual(_contaAtual, pesquisaConta);
         }
 
         [Given(@"que deixo de preencher algum campo")]

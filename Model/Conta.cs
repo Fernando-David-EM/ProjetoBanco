@@ -1,5 +1,4 @@
-﻿using CsvHelper.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +32,7 @@ namespace Banco.Model
         {
             Conta conta = new Conta
             {
+                Id = (int)campos[0],
                 Nome = (string)campos[1],
                 Telefone = (string)campos[2],
                 Cpf = (string)campos[3],
@@ -50,7 +50,7 @@ namespace Banco.Model
 
         public override string GetValueOfTableProperties()
         {
-            return $"(\"{Nome}\",\"{Telefone}\",\"{Cpf}\",{Saldo},{Limite})";
+            return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',{Saldo},{Limite})";
         }
 
         public override string GetColumnEqualsValue()
@@ -80,23 +80,27 @@ namespace Banco.Model
                 .ToList();
         }
 
+        public override int GetHashCode()
+        {
+            int hashCode = -1220008800;
+            hashCode = hashCode * -1521134295 + Id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Nome);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Telefone);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Cpf);
+            hashCode = hashCode * -1521134295 + Saldo.GetHashCode();
+            hashCode = hashCode * -1521134295 + Limite.GetHashCode();
+            return hashCode;
+        }
+
         public override bool Equals(object obj)
         {
-            var comparado = obj as Conta;
-
-            if (comparado.Nome == Nome &&
-                comparado.Telefone == Telefone &&
-                comparado.Cpf == Cpf &&
-                comparado.Id == Id &&
-                comparado.Saldo == Saldo &&
-                comparado.Limite == Limite)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return obj is Conta conta &&
+                   Id == conta.Id &&
+                   Nome == conta.Nome &&
+                   Telefone == conta.Telefone &&
+                   Cpf == conta.Cpf &&
+                   Saldo == conta.Saldo &&
+                   Limite == conta.Limite;
         }
     }
 }

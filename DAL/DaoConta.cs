@@ -1,4 +1,5 @@
-﻿using Banco.Exceptions;
+﻿using Banco.Data;
+using Banco.Exceptions;
 using Banco.Model;
 using Banco.Util;
 using FirebirdSql.Data.FirebirdClient;
@@ -18,11 +19,10 @@ namespace Banco.DAL
         CommandHelper<Conta> _commandHelper;
         private readonly string _nomeTabela = "contas";
 
-        public DaoConta(FbConnection connection)
+        public DaoConta()
         {
-            _connection = connection;
-            connection.Open();
-            _transaction = connection.BeginTransaction();
+            _connection = DataBase.GetConexao();
+            _transaction = DataBase.GetTransaction();
             _commandHelper = new CommandHelper<Conta>(_nomeTabela, _connection, _transaction);
         }
 
@@ -41,14 +41,19 @@ namespace Banco.DAL
             _commandHelper.ExecuteDelete(item.Id);
         }
 
-        IEnumerable<Conta> IDao<Conta>.GetAll()
+        public IEnumerable<Conta> GetAll()
         {
             return _commandHelper.ExecuteSearchAll();
         }
 
-        Conta IDao<Conta>.GetByID(int id)
+        public Conta GetByID(int id)
         {
             return _commandHelper.ExecuteSearchById(id);
+        }
+
+        public Conta GetByCpf(string cpf)
+        {
+            return _commandHelper.ExecuteSearchByCpf(cpf);
         }
     }
 }

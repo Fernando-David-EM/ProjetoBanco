@@ -43,6 +43,23 @@ namespace Banco.Util
             }
         }
 
+        public T ExecuteSearchByCpf(string cpf)
+        {
+            _command = new FbCommand($"select * from {_tabela} where con_cpf = \'{cpf}\'", _connection, _transaction);
+
+            var reader = _command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                var values = CreateArrayOfValues(reader);
+                return (T)new T().SetPropertiesFromObjectArray(values);
+            }
+            else
+            {
+                throw new PesquisaSemSucessoException();
+            }
+        }
+
         public void ExecuteDelete(int id)
         {
             _command = new FbCommand($"delete from {_tabela} where id = {id}", _connection, _transaction);

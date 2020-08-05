@@ -1,15 +1,11 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Banco.Data
 {
     class DataBase
     {
-		private static FbConnection _conexao = null;
+		private static FbConnection _conexao;
+        private static FbTransaction _transaction;
 
 		private DataBase()
         {
@@ -20,10 +16,34 @@ namespace Banco.Data
         {
 			if (_conexao == null)
             {
-				_conexao = new FbConnection("database=localhost:banco.fdb;user=sysdba;password=@Fernando23");
-			}
+				_conexao = new FbConnection(
+                    @"ServerType=0;
+                    database=localhost:E:\Prog\EM\ProjetoBanco\BANCO.FDB;
+                    user=SYSDBA;
+                    password=@Fernando23");
 
-			return _conexao;
+                _conexao.Open();
+            }
+
+            return _conexao;
+        }
+
+        public static FbTransaction GetTransaction()
+        {
+            if (_conexao != null)
+            {
+                if (_transaction == null)
+                {
+                    _transaction = _conexao.BeginTransaction();
+                }
+            }
+            else
+            {
+                GetConexao();
+                GetTransaction();
+            }
+
+            return _transaction;
         }
     }
 }
