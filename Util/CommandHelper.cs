@@ -67,7 +67,7 @@ namespace Banco.Util
             }
         }
 
-        public void ExecuteUpdate(T item)
+        public virtual void ExecuteUpdate(T item)
         {
             _command = new FbCommand($"update {_tabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
 

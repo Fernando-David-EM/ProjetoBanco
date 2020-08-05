@@ -137,6 +137,7 @@
     <Compile Include="DAL\IDao.cs" />
     <Compile Include="Data\DataBase.cs" />
     <Compile Include="Exceptions\CpfExistenteException.cs" />
+    <Compile Include="Exceptions\CpfInvalidoException.cs" />
     <Compile Include="Exceptions\FalhaEmAtualizarException.cs" />
     <Compile Include="Exceptions\FalhaEmDeletarException.cs" />
     <Compile Include="Exceptions\FalhaEmInserirException.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Steps\LoginSteps.cs" />
     <Compile Include="Util\CommandHelper.cs" />
     <Compile Include="Util\CommandHelperConta.cs" />
+    <Compile Include="Util\ValidaCPF.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

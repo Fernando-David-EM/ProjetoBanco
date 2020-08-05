@@ -242,7 +242,7 @@ this.FeatureBackground();
  testRunner.Given("que preencho os campos corretamente e o cpf com \"11111111111\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 26
- testRunner.Then("devo ver um erro de cpf invalido ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de cpf invalido \"11111111111\" ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();

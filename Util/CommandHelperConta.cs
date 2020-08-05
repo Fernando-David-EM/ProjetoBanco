@@ -17,17 +17,7 @@ namespace Banco.Util
 
         public override void ExecuteInsert(Conta item)
         {
-            try
-            {
-                var conta = ExecuteSearchByCpf(item.Cpf);
-
-                //Só passa dessa linha se achar um item com aquele cpf
-                throw new CpfExistenteException(conta.Cpf);
-            }
-            catch (PesquisaSemSucessoException)
-            {
-                //Significa que não achou, ou seja, pode continuar a inserção
-            }
+            ValidaCpf(item.Cpf);
 
             _command = new FbCommand($"insert into {_tabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", _connection, _transaction);
 
@@ -36,6 +26,20 @@ namespace Banco.Util
             if (resultado == 0)
             {
                 throw new FalhaEmInserirException();
+            }
+        }
+
+        public override void ExecuteUpdate(Conta item)
+        {
+            ValidaCpf(item.Cpf);
+
+            _command = new FbCommand($"update {_tabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
+
+            var resultado = _command.ExecuteNonQuery();
+
+            if (resultado == 0)
+            {
+                throw new FalhaEmAtualizarException();
             }
         }
 
@@ -54,6 +58,26 @@ namespace Banco.Util
             else
             {
                 throw new PesquisaSemSucessoException();
+            }
+        }
+
+        private void ValidaCpf(string cpf)
+        {
+            try
+            {
+                var conta = ExecuteSearchByCpf(cpf);
+
+                //Só passa dessa linha se achar um item com aquele cpf
+                throw new CpfExistenteException(cpf);
+            }
+            catch (PesquisaSemSucessoException)
+            {
+                //Significa que não achou, ou seja, pode continuar a inserção
+            }
+
+            if (!ValidaCPF.IsCpf(cpf))
+            {
+                throw new CpfInvalidoException(cpf);
             }
         }
     }

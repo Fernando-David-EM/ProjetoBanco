@@ -23,4 +23,4 @@ Cenario: Erro cpf já cadastrado
 
 Cenario: Erro cpf inválido
 	Dado que preencho os campos corretamente e o cpf com "11111111111"
-	Então devo ver um erro de cpf invalido ao cadastrar
+	Então devo ver um erro de cpf invalido "11111111111" ao cadastrar

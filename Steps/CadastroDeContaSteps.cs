@@ -17,17 +17,7 @@ namespace Banco.Steps
     {
         private DaoConta _daoConta;
         private Conta _contaAtual;
-
-        public static string NumericoAleatorio(int tamanho)
-        {
-            var chars = "0123456789";
-            var random = new Random();
-            var result = new string(
-                Enumerable.Repeat(chars, tamanho)
-                          .Select(s => s[random.Next(s.Length)])
-                          .ToArray());
-            return result;
-        }
+        private string _cpfValido = "11739736052";
 
         [Given(@"que estou logado como um administrador")]
         public void DadoQueEstouLogadoComoUmAdministrador()
@@ -49,7 +39,7 @@ namespace Banco.Steps
                 (
                     "Fernando",
                     "30874856",
-                    "12312312312",
+                    _cpfValido,
                     500.0,
                     1000.0
                 );
@@ -60,7 +50,7 @@ namespace Banco.Steps
         {
             _daoConta.Insert(_contaAtual);
 
-            var pesquisaConta = _daoConta.GetByCpf("12312312312");
+            var pesquisaConta = _daoConta.GetByCpf(_cpfValido);
 
             _contaAtual.Id = pesquisaConta.Id;
 
@@ -123,13 +113,22 @@ namespace Banco.Steps
         [Given(@"que preencho os campos corretamente e o cpf com ""(.*)""")]
         public void DadoQuePreenchoOCampoCpfCom(string p0)
         {
-            ScenarioContext.Current.Pending();
+            _contaAtual =
+                new Conta
+                (
+                    "Fernando",
+                    "30874856",
+                    p0,
+                    500.0,
+                    1000.0
+                );
         }
 
-        [Then(@"devo ver um erro de cpf invalido ao cadastrar")]
-        public void EntaoDevoVerUmErroDeCpfInvalido()
+        [Then(@"devo ver um erro de cpf invalido ""(.*)"" ao cadastrar")]
+        public void EntaoDevoVerUmErroDeCpfInvalido(string p0)
         {
-            ScenarioContext.Current.Pending();
+            var ex = Assert.Throws<CpfInvalidoException>(() => _daoConta.Insert(_contaAtual));
+            Assert.That(ex.Message, Is.EqualTo(p0));
         }
 
     }
