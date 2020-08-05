@@ -42,3 +42,47 @@ E:\Prog\EM\ProjetoBanco\bin\Debug\Utf8Json.xml
 E:\Prog\EM\ProjetoBanco\obj\Debug\Banco.csproj.CopyComplete
 E:\Prog\EM\ProjetoBanco\obj\Debug\Banco.exe
 E:\Prog\EM\ProjetoBanco\obj\Debug\Banco.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.NUnit.SpecFlowPlugin.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\NUnit3.TestAdapter.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\NUnit3.TestAdapter.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\nunit.engine.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\nunit.engine.api.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\nunit.engine.core.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Banco.exe.config
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Banco.exe
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Banco.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\BoDi.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Cucumber.Messages.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Dynamitey.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\FirebirdSql.Data.FirebirdClient.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Gherkin.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Google.Protobuf.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\nunit.framework.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\SpecFlow.Assist.Dynamic.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.ValueTuple.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Utf8Json.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\BoDi.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Google.Protobuf.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Google.Protobuf.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\nunit.framework.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\nunit.framework.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.ValueTuple.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.NUnit.SpecFlowPlugin.pdb
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Utf8Json.xml
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csprojAssemblyReference.cache
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.exe.config
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.Properties.Resources.resources
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csproj.GenerateResource.cache
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csproj.CoreCompileInputs.cache
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csproj.CopyComplete
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.exe
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.pdb
