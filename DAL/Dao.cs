@@ -27,6 +27,8 @@ namespace Banco.DAL
 
         public virtual void Insert(T item)
         {
+            ValidaCondicao(item.GetPropriedadeDeValidacao());
+
             var command = new FbCommand($"insert into {_nomeTabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", _connection, _transaction);
 
             var resultado = command.ExecuteNonQuery();
@@ -39,6 +41,8 @@ namespace Banco.DAL
 
         public virtual void Update(T item)
         {
+            ValidaCondicao(item.GetPropriedadeDeValidacao());
+
             var command = new FbCommand($"update {_nomeTabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
 
             var resultado = command.ExecuteNonQuery();
@@ -127,5 +131,7 @@ namespace Banco.DAL
 
             return values;
         }
+
+        protected abstract void ValidaCondicao(string validacao);
     }
 }

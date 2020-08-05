@@ -13,34 +13,6 @@ namespace Banco.DAL
             
         }
 
-        public override void Insert(Conta item)
-        {
-            ValidaCpf(item.Cpf);
-
-            var command = new FbCommand($"insert into {_nomeTabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", _connection, _transaction);
-
-            var resultado = command.ExecuteNonQuery();
-
-            if (resultado == 0)
-            {
-                throw new FalhaEmInserirException();
-            }
-        }
-
-        public override void Update(Conta item)
-        {
-            ValidaCpf(item.Cpf);
-
-            var command = new FbCommand($"update {_nomeTabela} set {item.GetColumnEqualsValue()} where id = id", _connection, _transaction);
-
-            var resultado = command.ExecuteNonQuery();
-
-            if (resultado == 0)
-            {
-                throw new FalhaEmAtualizarException();
-            }
-        }
-
         public Conta GetByCpf(string cpf)
         {
             var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", _connection, _transaction);
@@ -59,8 +31,10 @@ namespace Banco.DAL
             }
         }
 
-        private void ValidaCpf(string cpf)
+        protected override void ValidaCondicao(string validacao)
         {
+            string cpf = validacao;
+
             try
             {
                 var conta = GetByCpf(cpf);

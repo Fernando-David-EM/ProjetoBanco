@@ -105,12 +105,9 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("que existe uma conta com login \"admin\" e senha \"admin\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 9
- testRunner.And("preencho os campos corretamente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+ testRunner.And("preencho os campos corretamente e clico em login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 10
- testRunner.And("clico no botao de login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 11
  testRunner.Then("devo entrar com sucesso no sistema", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
@@ -124,7 +121,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro campo não preenchido", null, tagsOfScenario, argumentsOfScenario);
-#line 13
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -144,14 +141,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 14
+#line 13
  testRunner.Given("que não preencho algum campo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 15
- testRunner.And("clico no botao de login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 16
- testRunner.Then("devo ver um erro de campos \"Obrigatório o preenchimento dos campos!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line 14
+ testRunner.Then("devo ver um erro de campos nao preenchidos ao logar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -164,7 +158,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro conta inexistente", null, tagsOfScenario, argumentsOfScenario);
-#line 18
+#line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -184,17 +178,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 19
- testRunner.Given("que preencho os campos do login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 17
+ testRunner.Given("que preencho o campo do login e senha com \"teste\" e \"teste\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 20
- testRunner.But("não tenho conta no sistema", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Mas ");
-#line hidden
-#line 21
- testRunner.And("clico no botao de login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 22
- testRunner.Then("devo ver um erro de conta \"Usuário inexistente\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line 18
+ testRunner.Then("devo ver um erro de usuario inexistente ao logar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -207,7 +195,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro senha inválida", null, tagsOfScenario, argumentsOfScenario);
-#line 24
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -227,17 +215,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 25
- testRunner.Given("que preencho os campos do login com um usuário existente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 21
+ testRunner.Given("que coloco o login como \"admin\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 26
- testRunner.But("erro a senha", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Mas ");
+#line 22
+ testRunner.And("coloco a senha \"1234\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
-#line 27
- testRunner.And("clico no botao de login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 28
- testRunner.Then("devo ver um erro de senha \"Senha inválida\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line 23
+ testRunner.Then("devo ver um erro de senha invalida ao logar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
