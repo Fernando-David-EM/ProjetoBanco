@@ -146,11 +146,17 @@
     <Compile Include="Exceptions\SenhaIncorretaException.cs" />
     <Compile Include="Exceptions\UsuarioExistenteException.cs" />
     <Compile Include="Exceptions\UsuarioInexistenteException.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="View\TelaContas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="View\TelaContas.Designer.cs">
+      <DependentUpon>TelaContas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TelaLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TelaLogin.Designer.cs">
+      <DependentUpon>TelaLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Conta.cs" />
@@ -170,6 +176,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\TelaLogin.resx">
+      <DependentUpon>TelaLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Features\CadastroDeConta.feature" />
     <None Include="Features\Login.feature" />
     <None Include="packages.config" />
