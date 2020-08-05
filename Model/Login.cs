@@ -50,6 +50,15 @@ namespace Banco.Model
             return $"(\'{Usuario}\',\'{Senha}\')";
         }
 
+        public override string[] GetProperties()
+        {
+            return new string[]
+            {
+                Usuario,
+                Senha
+            };
+        }
+
         public override BaseModel SetPropertiesFromObjectArray(object[] campos)
         {
             Login login = new Login

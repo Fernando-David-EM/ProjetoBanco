@@ -45,5 +45,17 @@ namespace Banco.Data
 
             return _transaction;
         }
+
+        public static void CommitTransaction()
+        {
+            if (_conexao != null)
+            {
+                if (_transaction != null)
+                {
+                    _transaction.Commit();
+                    _transaction = null;
+                }
+            }
+        }
     }
 }

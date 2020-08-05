@@ -57,7 +57,7 @@ namespace Banco.DAL
             
         }
 
-        protected override void ValidaCondicao(string validacao)
+        protected override void ValidaCondicaoInsert(string validacao)
         {
             string usuario = validacao;
 
@@ -65,8 +65,28 @@ namespace Banco.DAL
             {
                 var login = GetByUsuario(usuario);
 
-                //Só passa dessa linha se achar um item com aquele cpf
+                //Só passa dessa linha se achar um item com aquele usuario
                 throw new UsuarioExistenteException(usuario);
+            }
+            catch (PesquisaSemSucessoException)
+            {
+                //Significa que não achou, ou seja, pode continuar a inserção
+            }
+        }
+
+        protected override void ValidaCondicaoUpdate(string validacao, bool mudouPropriedadeDeValidacao)
+        {
+            string usuario = validacao;
+
+            try
+            {
+                var login = GetByUsuario(usuario);
+
+                //Só passa dessa linha se achar um item com aquele usuario
+                if (mudouPropriedadeDeValidacao)
+                {
+                    throw new UsuarioExistenteException(usuario);
+                }
             }
             catch (PesquisaSemSucessoException)
             {
