@@ -1,6 +1,6 @@
-﻿namespace Banco
+﻿namespace Banco.View
 {
-    partial class Form1
+    partial class TelaContas
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // TelaContas
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(929, 582);
+            this.Name = "TelaContas";
+            this.Text = "TelaContas";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-
