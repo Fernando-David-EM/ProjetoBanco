@@ -14,7 +14,7 @@ namespace Banco.Util
                 return false;
             else
             {
-                int[] d = new int[14];
+                int[] d = new int[11];
                 int[] v = new int[2];
                 int j, i, soma;
                 string SoNumero;
