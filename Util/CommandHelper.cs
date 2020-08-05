@@ -7,10 +7,10 @@ namespace Banco.Util
 {
     class CommandHelper<T> where T : BaseModel, new()
     {
-        private FbConnection _connection;
-        private FbCommand _command;
-        private FbTransaction _transaction;
-        private string _tabela;
+        protected FbConnection _connection;
+        protected FbCommand _command;
+        protected FbTransaction _transaction;
+        protected string _tabela;
 
         public CommandHelper(string tabela, FbConnection connection, FbTransaction transaction)
         {
@@ -43,23 +43,6 @@ namespace Banco.Util
             }
         }
 
-        public T ExecuteSearchByCpf(string cpf)
-        {
-            _command = new FbCommand($"select * from {_tabela} where con_cpf = \'{cpf}\'", _connection, _transaction);
-
-            var reader = _command.ExecuteReader();
-
-            if (reader.Read())
-            {
-                var values = CreateArrayOfValues(reader);
-                return (T)new T().SetPropertiesFromObjectArray(values);
-            }
-            else
-            {
-                throw new PesquisaSemSucessoException();
-            }
-        }
-
         public void ExecuteDelete(int id)
         {
             _command = new FbCommand($"delete from {_tabela} where id = {id}", _connection, _transaction);
@@ -72,7 +55,7 @@ namespace Banco.Util
             }
         }
 
-        public void ExecuteInsert(T item)
+        public virtual void ExecuteInsert(T item)
         {
             _command = new FbCommand($"insert into {_tabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", _connection, _transaction);
 
@@ -96,7 +79,7 @@ namespace Banco.Util
             }
         }
 
-        private IEnumerable<T> Search()
+        protected IEnumerable<T> Search()
         {
             var reader = _command.ExecuteReader();
 
@@ -111,7 +94,7 @@ namespace Banco.Util
             return CreateList(objects);
         }
 
-        private IEnumerable<T> CreateList(List<object[]> objects)
+        protected IEnumerable<T> CreateList(List<object[]> objects)
         {
             List<T> contas = new List<T>();
 
@@ -121,7 +104,7 @@ namespace Banco.Util
             return contas;
         }
 
-        private object[] CreateArrayOfValues(FbDataReader reader)
+        protected object[] CreateArrayOfValues(FbDataReader reader)
         {
             var values = new object[reader.FieldCount];
             reader.GetValues(values);

@@ -119,10 +119,7 @@ this.FeatureBackground();
  testRunner.Given("que preencho todos os campos corretamente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 13
- testRunner.And("clico no botao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 14
- testRunner.Then("uma nova conta deve ser cadastrada", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("uma nova conta deve ser cadastrada ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -135,7 +132,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro falta de campos", null, tagsOfScenario, argumentsOfScenario);
-#line 16
+#line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -158,15 +155,11 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
 this.FeatureBackground();
 #line hidden
-#line 17
+#line 16
  testRunner.Given("que deixo de preencher algum campo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 18
- testRunner.And("clico no botao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 19
- testRunner.Then("devo ver um erro de preenchimento de campos \"Obrigatório o preenchimento dos camp" +
-                        "os!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line 17
+ testRunner.Then("devo ver um erro de preenchimento de campos ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -179,7 +172,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro cpf já cadastrado", null, tagsOfScenario, argumentsOfScenario);
-#line 21
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -202,17 +195,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
 this.FeatureBackground();
 #line hidden
+#line 20
+ testRunner.Given("que já existe uma conta com o cpf \"42706252014\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line hidden
+#line 21
+ testRunner.And("preenchi o resto dos campos corretamente com o cpf \"42706252014\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
 #line 22
- testRunner.Given("que já existe uma conta com o cpf 42706252014", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
-#line 23
- testRunner.And("preenchi o resto dos campos corretamente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 24
- testRunner.And("clico no botao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 25
- testRunner.Then("devo ver um erro de cpf existente \"CPF já existe no sistema!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de cpf existente \"42706252014\" ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -225,7 +215,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro cpf inválido", null, tagsOfScenario, argumentsOfScenario);
-#line 27
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -248,17 +238,11 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
 this.FeatureBackground();
 #line hidden
-#line 28
- testRunner.Given("que preencho o campo cpf com 11111111111", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 25
+ testRunner.Given("que preencho os campos corretamente e o cpf com \"11111111111\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 29
- testRunner.And("preenchi o resto dos campos corretamente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 30
- testRunner.And("clico no botao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 31
- testRunner.Then("devo ver um erro de cpf invalido \"CPF inválido!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line 26
+ testRunner.Then("devo ver um erro de cpf invalido ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();

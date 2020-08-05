@@ -16,14 +16,14 @@ namespace Banco.DAL
     {
         FbConnection _connection = null;
         FbTransaction _transaction = null;
-        CommandHelper<Conta> _commandHelper;
+        CommandHelperConta _commandHelper;
         private readonly string _nomeTabela = "contas";
 
         public DaoConta()
         {
             _connection = DataBase.GetConexao();
             _transaction = DataBase.GetTransaction();
-            _commandHelper = new CommandHelper<Conta>(_nomeTabela, _connection, _transaction);
+            _commandHelper = new CommandHelperConta(_nomeTabela, _connection, _transaction);
         }
 
         public void Insert(Conta item)

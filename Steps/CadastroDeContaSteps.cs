@@ -1,5 +1,6 @@
 ﻿using Banco.DAL;
 using Banco.Data;
+using Banco.Exceptions;
 using Banco.Model;
 using NUnit.Framework;
 using System;
@@ -14,6 +15,9 @@ namespace Banco.Steps
     [Binding]
     class CadastroDeContaSteps
     {
+        private DaoConta _daoConta;
+        private Conta _contaAtual;
+
         public static string NumericoAleatorio(int tamanho)
         {
             var chars = "0123456789";
@@ -25,14 +29,10 @@ namespace Banco.Steps
             return result;
         }
 
-        DaoConta _daoConta;
-        Conta _contaAtual;
-        string _cpfUsado;
-
         [Given(@"que estou logado como um administrador")]
         public void DadoQueEstouLogadoComoUmAdministrador()
         {
-            //TODO
+            //estou!!!
         }
 
         [Given(@"clico no botao de cadastro de conta")]
@@ -44,29 +44,23 @@ namespace Banco.Steps
         [Given(@"que preencho todos os campos corretamente")]
         public void DadoQuePreenchoTodosOsCamposCorretamente()
         {
-            _cpfUsado = NumericoAleatorio(11);
-
             _contaAtual = 
                 new Conta
                 (
                     "Fernando",
                     "30874856",
-                    _cpfUsado,
+                    "12312312312",
                     500.0,
                     1000.0
                 );
         }
 
-        [Given(@"clico no botao cadastrar")]
-        public void DadoClicoNoBotaoCadastrar()
-        {
-            _daoConta.Insert(_contaAtual);
-        }
-
-        [Then(@"uma nova conta deve ser cadastrada")]
+        [Then(@"uma nova conta deve ser cadastrada ao cadastrar")]
         public void EntaoUmaNovaContaDeveSerCadastrada()
         {
-            var pesquisaConta = _daoConta.GetByCpf(_cpfUsado);
+            _daoConta.Insert(_contaAtual);
+
+            var pesquisaConta = _daoConta.GetByCpf("12312312312");
 
             _contaAtual.Id = pesquisaConta.Id;
 
@@ -76,41 +70,64 @@ namespace Banco.Steps
         [Given(@"que deixo de preencher algum campo")]
         public void DadoQueDeixoDePreencherAlgumCampo()
         {
-            ScenarioContext.Current.Pending();
+            //TODO TELA
         }
 
-        [Then(@"devo ver um erro de preenchimento de campos ""(.*)""")]
-        public void EntaoDevoVerUmErroDePreenchimentoDeCampos(string p0)
+        [Then(@"devo ver um erro de preenchimento de campos ao cadastrar")]
+        public void EntaoDevoVerUmErroDePreenchimentoDeCampos()
         {
-            ScenarioContext.Current.Pending();
+            //TODO TELA
         }
 
-        [Given(@"que já existe uma conta com o cpf (.*)")]
-        public void DadoQueJaExisteUmaContaComOCpf(Decimal p0)
+        [Given(@"que já existe uma conta com o cpf ""(.*)""")]
+        public void DadoQueJaExisteUmaContaComOCpf(string p0)
         {
-            ScenarioContext.Current.Pending();
+            var conta =
+                new Conta
+                (
+                    "Fernando",
+                    "30874856",
+                    p0,
+                    500.0,
+                    1000.0
+                );
+
+            _daoConta.Insert(conta);
+
+            var pesquisaConta = _daoConta.GetByCpf(p0);
+
+            Assert.AreEqual(p0, pesquisaConta.Cpf);
         }
 
-        [Given(@"preenchi o resto dos campos corretamente")]
-        public void DadoPreenchiORestoDosCamposCorretamente()
+        [Given(@"preenchi o resto dos campos corretamente com o cpf ""(.*)""")]
+        public void DadoPreenchiORestoDosCamposCorretamente(string p0)
         {
-            ScenarioContext.Current.Pending();
+            _contaAtual =
+                new Conta
+                (
+                    "Fernando",
+                    "30874856",
+                    p0,
+                    500.0,
+                    1000.0
+                );
         }
 
-        [Then(@"devo ver um erro de cpf existente ""(.*)""")]
+        [Then(@"devo ver um erro de cpf existente ""(.*)"" ao cadastrar")]
         public void EntaoDevoVerUmErroDeCpfExistente(string p0)
         {
-            ScenarioContext.Current.Pending();
+            var ex = Assert.Throws<CpfExistenteException>(() => _daoConta.Insert(_contaAtual));
+            Assert.That(ex.Message, Is.EqualTo(p0));
         }
 
-        [Given(@"que preencho o campo cpf com (.*)")]
-        public void DadoQuePreenchoOCampoCpfCom(Decimal p0)
+        [Given(@"que preencho os campos corretamente e o cpf com ""(.*)""")]
+        public void DadoQuePreenchoOCampoCpfCom(string p0)
         {
             ScenarioContext.Current.Pending();
         }
 
-        [Then(@"devo ver um erro de cpf invalido ""(.*)""")]
-        public void EntaoDevoVerUmErroDeCpfInvalido(string p0)
+        [Then(@"devo ver um erro de cpf invalido ao cadastrar")]
+        public void EntaoDevoVerUmErroDeCpfInvalido()
         {
             ScenarioContext.Current.Pending();
         }
