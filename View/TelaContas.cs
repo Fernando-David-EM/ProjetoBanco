@@ -20,6 +20,7 @@ namespace Banco.View
     {
         private DaoConta _daoConta;
         private Conta _contaSelecionada;
+        private bool _clicado = false;
 
         public TelaContas()
         {
@@ -70,6 +71,8 @@ namespace Banco.View
 
                 _daoConta.Insert((Conta)new Conta().SetPropertiesFromObjectArray(campos));
 
+                _clicado = false;
+
                 PopularTable();
             }
             catch (CpfExistenteException ex)
@@ -92,45 +95,56 @@ namespace Banco.View
 
         private void buttonAlterar_Click(object sender, EventArgs e)
         {
-            var campos = new object[]
+            if (_clicado)
             {
+                var campos = new object[]
+                {
                 _contaSelecionada.Id.ToString(),
                 textBoxNome.Text,
                 textBoxTelefone.Text,
                 textBoxCpf.Text,
                 textBoxSaldo.Text,
                 textBoxLimite.Text
-            };
+                };
 
-            try
-            {
-                ValidarCampos(campos);
+                try
+                {
+                    ValidarCampos(campos);
 
-                _daoConta.Update((Conta)new Conta().SetPropertiesFromObjectArray(campos), textBoxCpf.Text != _contaSelecionada.Cpf);
+                    _daoConta.Update((Conta)new Conta().SetPropertiesFromObjectArray(campos), textBoxCpf.Text != _contaSelecionada.Cpf);
 
-                PopularTable();
+                    _clicado = false;
+
+                    PopularTable();
+                }
+                catch (CpfExistenteException ex)
+                {
+                    MostrarErro("Cpf já existe!", ex.Message);
+                }
+                catch (CpfInvalidoException ex)
+                {
+                    MostrarErro("Cpf inválido!", ex.Message);
+                }
+                catch (FalhaEmAtualizarException ex)
+                {
+                    MostrarErro("", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    MostrarErro(ex.Message, ex.StackTrace);
+                }
             }
-            catch (CpfExistenteException ex)
+            else
             {
-                MostrarErro("Cpf já existe!", ex.Message);
-            }
-            catch (CpfInvalidoException ex)
-            {
-                MostrarErro("Cpf inválido!", ex.Message);
-            }
-            catch (FalhaEmAtualizarException ex)
-            {
-                MostrarErro("", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                MostrarErro(ex.Message, ex.StackTrace);
+                MessageBox.Show("É necessário clicar numa linha da tabela para executar essa ação!");
             }
         }
 
         private void buttonRemover_Click(object sender, EventArgs e)
         {
-            var campos = new object[]
+            if (_clicado)
+            {
+                var campos = new object[]
             {
                 _contaSelecionada.Id.ToString(),
                 textBoxNome.Text,
@@ -140,21 +154,28 @@ namespace Banco.View
                 textBoxLimite.Text
             };
 
-            try
-            {
-                ValidarCampos(campos);
+                try
+                {
+                    ValidarCampos(campos);
 
-                _daoConta.Delete((Conta)new Conta().SetPropertiesFromObjectArray(campos));
+                    _daoConta.Delete((Conta)new Conta().SetPropertiesFromObjectArray(campos));
 
-                PopularTable();
+                    _clicado = false;
+
+                    PopularTable();
+                }
+                catch (FalhaEmDeletarException ex)
+                {
+                    MostrarErro("", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    MostrarErro(ex.Message, ex.StackTrace);
+                }
             }
-            catch (FalhaEmDeletarException ex)
+            else
             {
-                MostrarErro("", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                MostrarErro(ex.Message, ex.StackTrace);
+                MessageBox.Show("É necessário clicar numa linha da tabela para executar essa ação!");
             }
         }
 
@@ -177,7 +198,7 @@ namespace Banco.View
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int selectedRowCount =
-                   dataGridView1.SelectedRows.Count;
+               dataGridView1.SelectedRows.Count;
             if (selectedRowCount > 0)
             {
                 if (selectedRowCount == 1)
@@ -187,19 +208,13 @@ namespace Banco.View
                     var cpf = cell.Value.ToString();
 
                     _contaSelecionada = _daoConta.GetByCpf(Formatacao.RemovePontos(cpf));
+
+                    _clicado = true;
                 }
                 else
                 {
                     MessageBox.Show("Selecione apenas uma linha da tabela para alterar!");
                 }
-            }
-            else
-            {
-                if (selectedRowCount == 0)
-                {
-                    MessageBox.Show("É necessário selecionar uma linha da tabela para alterar!");
-                }
-
             }
 
             PopularCampos(_contaSelecionada);
