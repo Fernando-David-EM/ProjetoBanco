@@ -1,4 +1,5 @@
 ﻿using Banco.DAL;
+using Banco.Exceptions;
 using Banco.Model;
 using NUnit.Framework;
 using System;
@@ -44,40 +45,41 @@ namespace Banco.Steps
             //TODO tela
         }
 
-        [Then(@"devo ver um erro de campos ""(.*)""")]
-        public void EntaoDevoVerUmErroDeCampos(string p0)
+        [Then(@"devo ver um erro de campos nao preenchidos ao logar")]
+        public void EntaoDevoVerUmErroDeCampos()
         {
             //TODO tela
         }
 
         [Given(@"que preencho o campo do login e senha com ""(.*)"" e ""(.*)""")]
-        public void DadoQuePreenchoOCampoDoLoginESenhaComE(string p0, string p1)
+        public void DadoQuePreenchoOCampoDoLoginESenhaComE(string login, string senha)
         {
-            ScenarioContext.Current.Pending();
+            _loginUsado = login;
+            _senhaUsada = senha;
         }
 
-        [Then(@"devo ver um erro de conta ""(.*)""")]
-        public void EntaoDevoVerUmErroDeConta(string p0)
+        [Then(@"devo ver um erro de usuario inexistente ao logar")]
+        public void EntaoDevoVerUmErroDeConta()
         {
-            ScenarioContext.Current.Pending();
+            Assert.Throws<UsuarioInexistenteException>(() => _daoLogin.Logar(_loginUsado, _senhaUsada));
         }
 
         [Given(@"que coloco o login como ""(.*)""")]
-        public void DadoQueColocoOLoginComo(string p0)
+        public void DadoQueColocoOLoginComo(string login)
         {
-            ScenarioContext.Current.Pending();
+            _loginUsado = login;
         }
 
         [Given(@"coloco a senha ""(.*)""")]
-        public void DadoColocoASenha(int p0)
+        public void DadoColocoASenha(string senha)
         {
-            ScenarioContext.Current.Pending();
+            _senhaUsada = senha;
         }
 
-        [Then(@"devo ver um erro de senha ""(.*)""")]
-        public void EntaoDevoVerUmErroDeSenha(string p0)
+        [Then(@"devo ver um erro de senha invalida ao logar")]
+        public void EntaoDevoVerUmErroDeSenha()
         {
-            ScenarioContext.Current.Pending();
+            Assert.Throws<SenhaIncorretaException>(() => _daoLogin.Logar(_loginUsado, _senhaUsada));
         }
 
     }

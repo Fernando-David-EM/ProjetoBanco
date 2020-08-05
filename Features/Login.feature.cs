@@ -145,7 +145,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("que não preencho algum campo", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 14
- testRunner.Then("devo ver um erro de campos \"Obrigatório o preenchimento dos campos!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de campos nao preenchidos ao logar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -182,7 +182,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("que preencho o campo do login e senha com \"teste\" e \"teste\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 18
- testRunner.Then("devo ver um erro de conta \"Usuário inexistente\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de usuario inexistente ao logar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -222,7 +222,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("coloco a senha \"1234\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 23
- testRunner.Then("devo ver um erro de senha \"Senha inválida\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de senha invalida ao logar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();

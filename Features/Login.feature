@@ -11,13 +11,13 @@ Cenario: Sucesso
 
 Cenario: Erro campo não preenchido
 	Dado que não preencho algum campo
-	Então devo ver um erro de campos "Obrigatório o preenchimento dos campos!"
+	Então devo ver um erro de campos nao preenchidos ao logar
 
 Cenario: Erro conta inexistente
 	Dado que preencho o campo do login e senha com "teste" e "teste" 
-	Então devo ver um erro de conta "Usuário inexistente"
+	Então devo ver um erro de usuario inexistente ao logar
 
 Cenario: Erro senha inválida
 	Dado que coloco o login como "admin"
 	E coloco a senha "1234"
-	Então devo ver um erro de senha "Senha inválida"
+	Então devo ver um erro de senha invalida ao logar
