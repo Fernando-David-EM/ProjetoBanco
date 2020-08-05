@@ -71,6 +71,11 @@ namespace Banco.Model
             return final;
         }
 
+        public override string GetPropriedadeDeValidacao()
+        {
+            return Cpf;
+        }
+
         private List<string> SplitAndRemoveParenthesis(string text)
         {
             return 
