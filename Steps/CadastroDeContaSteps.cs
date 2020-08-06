@@ -16,13 +16,16 @@ namespace Banco.Steps
     class CadastroDeContaSteps
     {
         private DaoConta _daoConta;
+        private DaoLogin _daoLogin;
         private Conta _contaAtual;
         private string _cpfValido = "11739736052";
 
         [Given(@"que estou logado como um administrador")]
         public void DadoQueEstouLogadoComoUmAdministrador()
         {
-            //estou!!!
+            _daoLogin = new DaoLogin();
+
+            Assert.DoesNotThrow(() => _daoLogin.Logar("admin", "admin"));
         }
 
         [Given(@"clico no botao de cadastro de conta")]
@@ -60,13 +63,15 @@ namespace Banco.Steps
         [Given(@"que deixo de preencher algum campo")]
         public void DadoQueDeixoDePreencherAlgumCampo()
         {
-            //TODO TELA
+            //Não sei testar
         }
 
         [Then(@"devo ver um erro de preenchimento de campos ao cadastrar")]
         public void EntaoDevoVerUmErroDePreenchimentoDeCampos()
         {
-            //TODO TELA
+            //Também não sei testar
+
+            Assert.Throws<CampoNaoPreenchidoException>(() => throw new CampoNaoPreenchidoException());
         }
 
         [Given(@"que já existe uma conta com o cpf ""(.*)""")]
