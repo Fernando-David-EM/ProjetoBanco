@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Banco.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,13 @@ namespace Banco
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TelaLogin());
+            var telaLogin = new TelaLogin();
+            Application.Run(telaLogin);
+
+            if (telaLogin.UsuarioAutenticado)
+            {
+                Application.Run(new TelaContas());
+            }
         }
     }
 }

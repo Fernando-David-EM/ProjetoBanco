@@ -15,12 +15,16 @@ namespace Banco
 {
     public partial class TelaLogin : Form
     {
+
+        public bool UsuarioAutenticado { get; private set; }
         private DaoLogin _daoLogin;
 
         public TelaLogin()
         {
             InitializeComponent();
             _daoLogin = new DaoLogin();
+
+            maskedTextBoxSenha.PasswordChar = '*';
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -28,11 +32,16 @@ namespace Banco
             try
             {
                 string usuario = textBoxUsuario.Text;
-                string senha = textBoxSenha.Text;
+                string senha = maskedTextBoxSenha.Text;
 
-                _daoLogin.Logar(usuario, senha);
+                var usuarioLogado = _daoLogin.Logar(usuario, senha);
 
-                new TelaContas().Show();
+                if (usuarioLogado != null)
+                {
+                    UsuarioAutenticado = true;
+                    Close();
+                }
+
             }
             catch (PesquisaSemSucessoException ex)
             {

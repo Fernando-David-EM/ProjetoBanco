@@ -30,10 +30,10 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBoxSenha = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxUsuario = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
+            this.maskedTextBoxSenha = new System.Windows.Forms.MaskedTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -52,20 +52,13 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBoxSenha);
+            this.groupBox3.Controls.Add(this.maskedTextBoxSenha);
             this.groupBox3.Location = new System.Drawing.Point(29, 101);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(264, 53);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Senha";
-            // 
-            // textBoxSenha
-            // 
-            this.textBoxSenha.Location = new System.Drawing.Point(20, 20);
-            this.textBoxSenha.Name = "textBoxSenha";
-            this.textBoxSenha.Size = new System.Drawing.Size(227, 20);
-            this.textBoxSenha.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -94,6 +87,13 @@
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
+            // maskedTextBoxSenha
+            // 
+            this.maskedTextBoxSenha.Location = new System.Drawing.Point(20, 20);
+            this.maskedTextBoxSenha.Name = "maskedTextBoxSenha";
+            this.maskedTextBoxSenha.Size = new System.Drawing.Size(227, 20);
+            this.maskedTextBoxSenha.TabIndex = 0;
+            // 
             // TelaLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,10 +117,10 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBoxSenha;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBoxUsuario;
         private System.Windows.Forms.Button buttonLogin;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxSenha;
     }
 }
 

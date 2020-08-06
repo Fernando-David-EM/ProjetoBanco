@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Configuration;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,6 +29,11 @@ namespace Banco.View
             _daoConta = new DaoConta();
             PopularTable();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            maskedTextBoxTelefone.Mask = "(00) 00000-0000";
+            maskedTextBoxCpf.Mask = "000,000,000-00";
+            maskedTextBoxSaldo.Mask = "$ 999999";
+            maskedTextBoxLimite.Mask = "$ 999999";
         }
 
         private void PopularTable()
@@ -48,32 +54,30 @@ namespace Banco.View
         private void PopularCampos(Conta conta)
         {
             textBoxNome.Text = conta.Nome;
-            textBoxTelefone.Text = conta.Telefone;
-            textBoxCpf.Text = conta.Cpf;
-            textBoxSaldo.Text = conta.Saldo.ToString();
-            textBoxLimite.Text = conta.Limite.ToString();
+            maskedTextBoxTelefone.Text = conta.Telefone;
+            maskedTextBoxCpf.Text = conta.Cpf;
+            maskedTextBoxSaldo.Text = conta.Saldo.ToString();
+            maskedTextBoxLimite.Text = conta.Limite.ToString();
         }
 
         private void buttonCadastrar_Click(object sender, EventArgs e)
         {
-            var campos = new object[]
-            {
-                textBoxNome.Text,
-                textBoxTelefone.Text,
-                textBoxCpf.Text,
-                textBoxSaldo.Text,
-                textBoxLimite.Text
-            };
 
             try
             {
-                ValidarCampos(campos);
+                ValidarCampos();
+
+                var campos = GeraCamposArrayObject(false);
 
                 _daoConta.Insert((Conta)new Conta().SetPropertiesFromObjectArray(campos));
 
                 _clicado = false;
 
                 PopularTable();
+            }
+            catch (CampoNaoPreenchidoException ex)
+            {
+                MostrarErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
             }
             catch (CpfExistenteException ex)
             {
@@ -97,25 +101,21 @@ namespace Banco.View
         {
             if (_clicado)
             {
-                var campos = new object[]
-                {
-                _contaSelecionada.Id.ToString(),
-                textBoxNome.Text,
-                textBoxTelefone.Text,
-                textBoxCpf.Text,
-                textBoxSaldo.Text,
-                textBoxLimite.Text
-                };
-
                 try
                 {
-                    ValidarCampos(campos);
+                    ValidarCampos();
 
-                    _daoConta.Update((Conta)new Conta().SetPropertiesFromObjectArray(campos), textBoxCpf.Text != _contaSelecionada.Cpf);
+                    var campos = GeraCamposArrayObject(true);
+
+                    _daoConta.Update((Conta)new Conta().SetPropertiesFromObjectArray(campos), maskedTextBoxCpf.Text != _contaSelecionada.Cpf);
 
                     _clicado = false;
 
                     PopularTable();
+                }
+                catch (CampoNaoPreenchidoException ex)
+                {
+                    MostrarErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
                 }
                 catch (CpfExistenteException ex)
                 {
@@ -144,25 +144,21 @@ namespace Banco.View
         {
             if (_clicado)
             {
-                var campos = new object[]
-            {
-                _contaSelecionada.Id.ToString(),
-                textBoxNome.Text,
-                textBoxTelefone.Text,
-                textBoxCpf.Text,
-                textBoxSaldo.Text,
-                textBoxLimite.Text
-            };
-
                 try
                 {
-                    ValidarCampos(campos);
+                    ValidarCampos();
+
+                    var campos = GeraCamposArrayObject(true);
 
                     _daoConta.Delete((Conta)new Conta().SetPropertiesFromObjectArray(campos));
 
                     _clicado = false;
 
                     PopularTable();
+                }
+                catch (CampoNaoPreenchidoException ex)
+                {
+                    MostrarErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
                 }
                 catch (FalhaEmDeletarException ex)
                 {
@@ -179,14 +175,27 @@ namespace Banco.View
             }
         }
 
-        private void ValidarCampos(object[] campos)
+        private void ValidarCampos()
         {
-            var camposSaoValidos = campos
-                .All(x => !string.IsNullOrEmpty((string)x));
+            var campos = new string[]
+            {
+                textBoxNome.Text,
+                Formatacao.SobraApenasNumeros(maskedTextBoxTelefone.Text),
+                Formatacao.SobraApenasNumeros(maskedTextBoxCpf.Text),
+                Formatacao.SobraApenasNumeros(maskedTextBoxSaldo.Text),
+                Formatacao.SobraApenasNumeros(maskedTextBoxLimite.Text)
+            };
 
-            if (!camposSaoValidos)
+            var camposForamPreenchidos = campos
+                .All(x => !string.IsNullOrEmpty(x));
+
+            if (!camposForamPreenchidos)
             {
                 throw new CampoNaoPreenchidoException();
+            }
+            if (campos[1].Length < 11 || !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
+            {
+                throw new CampoNaoPreenchidoException("Campo Celular");
             }
         }
 
@@ -207,7 +216,7 @@ namespace Banco.View
                     var cell = row.Cells[2];
                     var cpf = cell.Value.ToString();
 
-                    _contaSelecionada = _daoConta.GetByCpf(Formatacao.RemovePontos(cpf));
+                    _contaSelecionada = _daoConta.GetByCpf(cpf);
 
                     _clicado = true;
                 }
@@ -218,6 +227,35 @@ namespace Banco.View
             }
 
             PopularCampos(_contaSelecionada);
+        }
+
+        private object[] GeraCamposArrayObject(bool deveGerarId)
+        {
+
+            if (deveGerarId)
+            {
+                return new object[]
+            {
+                _contaSelecionada.Id,
+                textBoxNome.Text,
+                maskedTextBoxTelefone.Text,
+                maskedTextBoxCpf.Text,
+                Formatacao.RemoveReais(maskedTextBoxSaldo.Text),
+                Formatacao.RemoveReais(maskedTextBoxLimite.Text)
+            };
+            }
+            else
+            {
+                return new object[]
+            {
+                textBoxNome.Text,
+                maskedTextBoxTelefone.Text,
+                maskedTextBoxCpf.Text,
+                Formatacao.RemoveReais(maskedTextBoxSaldo.Text),
+                Formatacao.RemoveReais(maskedTextBoxLimite.Text)
+            };
+            }
+
         }
     }
 }

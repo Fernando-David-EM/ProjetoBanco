@@ -63,8 +63,8 @@ namespace Banco.Model
             return new string[]
             {
                 Nome,
-                Formatacao.TelefoneComPontos(Telefone),
-                Formatacao.CpfComPontos(Cpf),
+                Telefone,
+                Cpf,
                 Formatacao.DoubleEmReais(Saldo),
                 Formatacao.DoubleEmReais(Limite)
             };

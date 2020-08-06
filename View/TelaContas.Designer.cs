@@ -32,10 +32,10 @@ namespace Banco.View
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxLimite = new System.Windows.Forms.TextBox();
-            this.textBoxSaldo = new System.Windows.Forms.TextBox();
-            this.textBoxCpf = new System.Windows.Forms.TextBox();
-            this.textBoxTelefone = new System.Windows.Forms.TextBox();
+            this.maskedTextBoxLimite = new System.Windows.Forms.MaskedTextBox();
+            this.maskedTextBoxSaldo = new System.Windows.Forms.MaskedTextBox();
+            this.maskedTextBoxCpf = new System.Windows.Forms.MaskedTextBox();
+            this.maskedTextBoxTelefone = new System.Windows.Forms.MaskedTextBox();
             this.textBoxNome = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -63,10 +63,10 @@ namespace Banco.View
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBoxLimite);
-            this.groupBox1.Controls.Add(this.textBoxSaldo);
-            this.groupBox1.Controls.Add(this.textBoxCpf);
-            this.groupBox1.Controls.Add(this.textBoxTelefone);
+            this.groupBox1.Controls.Add(this.maskedTextBoxLimite);
+            this.groupBox1.Controls.Add(this.maskedTextBoxSaldo);
+            this.groupBox1.Controls.Add(this.maskedTextBoxCpf);
+            this.groupBox1.Controls.Add(this.maskedTextBoxTelefone);
             this.groupBox1.Controls.Add(this.textBoxNome);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
@@ -80,33 +80,38 @@ namespace Banco.View
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dados";
             // 
-            // textBoxLimite
+            // maskedTextBoxLimite
             // 
-            this.textBoxLimite.Location = new System.Drawing.Point(102, 129);
-            this.textBoxLimite.Name = "textBoxLimite";
-            this.textBoxLimite.Size = new System.Drawing.Size(450, 20);
-            this.textBoxLimite.TabIndex = 9;
+            this.maskedTextBoxLimite.Location = new System.Drawing.Point(102, 129);
+            this.maskedTextBoxLimite.Name = "maskedTextBoxLimite";
+            this.maskedTextBoxLimite.PromptChar = ' ';
+            this.maskedTextBoxLimite.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.maskedTextBoxLimite.Size = new System.Drawing.Size(450, 20);
+            this.maskedTextBoxLimite.TabIndex = 9;
             // 
-            // textBoxSaldo
+            // maskedTextBoxSaldo
             // 
-            this.textBoxSaldo.Location = new System.Drawing.Point(102, 103);
-            this.textBoxSaldo.Name = "textBoxSaldo";
-            this.textBoxSaldo.Size = new System.Drawing.Size(450, 20);
-            this.textBoxSaldo.TabIndex = 8;
+            this.maskedTextBoxSaldo.Location = new System.Drawing.Point(102, 103);
+            this.maskedTextBoxSaldo.Name = "maskedTextBoxSaldo";
+            this.maskedTextBoxSaldo.PromptChar = ' ';
+            this.maskedTextBoxSaldo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.maskedTextBoxSaldo.Size = new System.Drawing.Size(450, 20);
+            this.maskedTextBoxSaldo.TabIndex = 8;
             // 
-            // textBoxCpf
+            // maskedTextBoxCpf
             // 
-            this.textBoxCpf.Location = new System.Drawing.Point(102, 77);
-            this.textBoxCpf.Name = "textBoxCpf";
-            this.textBoxCpf.Size = new System.Drawing.Size(450, 20);
-            this.textBoxCpf.TabIndex = 7;
+            this.maskedTextBoxCpf.Location = new System.Drawing.Point(102, 77);
+            this.maskedTextBoxCpf.Name = "maskedTextBoxCpf";
+            this.maskedTextBoxCpf.Size = new System.Drawing.Size(450, 20);
+            this.maskedTextBoxCpf.TabIndex = 7;
             // 
-            // textBoxTelefone
+            // maskedTextBoxTelefone
             // 
-            this.textBoxTelefone.Location = new System.Drawing.Point(102, 51);
-            this.textBoxTelefone.Name = "textBoxTelefone";
-            this.textBoxTelefone.Size = new System.Drawing.Size(450, 20);
-            this.textBoxTelefone.TabIndex = 6;
+            this.maskedTextBoxTelefone.HidePromptOnLeave = true;
+            this.maskedTextBoxTelefone.Location = new System.Drawing.Point(102, 51);
+            this.maskedTextBoxTelefone.Name = "maskedTextBoxTelefone";
+            this.maskedTextBoxTelefone.Size = new System.Drawing.Size(450, 20);
+            this.maskedTextBoxTelefone.TabIndex = 6;
             // 
             // textBoxNome
             // 
@@ -147,9 +152,9 @@ namespace Banco.View
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(25, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Telefone :";
+            this.label2.Text = "Celular :";
             // 
             // label1
             // 
@@ -302,10 +307,6 @@ namespace Banco.View
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBoxLimite;
-        private System.Windows.Forms.TextBox textBoxSaldo;
-        private System.Windows.Forms.TextBox textBoxCpf;
-        private System.Windows.Forms.TextBox textBoxTelefone;
         private System.Windows.Forms.TextBox textBoxNome;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -322,5 +323,9 @@ namespace Banco.View
         private System.Windows.Forms.DataGridViewTextBoxColumn Saldo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Limite;
         private System.Windows.Forms.BindingSource daoContaBindingSource;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxLimite;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxSaldo;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxCpf;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxTelefone;
     }
 }
