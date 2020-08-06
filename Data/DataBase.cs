@@ -2,60 +2,19 @@
 
 namespace Banco.Data
 {
-    class DataBase
+    class DataBase 
     {
-		private static FbConnection _conexao;
-        private static FbTransaction _transaction;
-
-		private DataBase()
+        public FbConnection AbrirConexao()
         {
-
-        }
-
-		public static FbConnection GetConexao()
-        {
-			if (_conexao == null)
-            {
-				_conexao = new FbConnection(
-                    @"ServerType=0;
+            var conexao = new FbConnection(
+                @"ServerType=0;
                     database=localhost:C:\Users\Escolar Manager\source\repos\Banco\BANCO.FDB;
                     user=SYSDBA;
                     password=@Fernando23");
 
-                _conexao.Open();
-            }
+            conexao.Open();
 
-            return _conexao;
-        }
-
-        public static FbTransaction GetTransaction()
-        {
-            if (_conexao != null)
-            {
-                if (_transaction == null)
-                {
-                    _transaction = _conexao.BeginTransaction();
-                }
-            }
-            else
-            {
-                GetConexao();
-                GetTransaction();
-            }
-
-            return _transaction;
-        }
-
-        public static void CommitTransaction()
-        {
-            if (_conexao != null)
-            {
-                if (_transaction != null)
-                {
-                    _transaction.Commit();
-                    _transaction = null;
-                }
-            }
+            return conexao;
         }
     }
 }

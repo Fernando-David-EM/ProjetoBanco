@@ -35,61 +35,26 @@ namespace Banco.Model
 
             if (campos.Length == 6)
             {
-                int idConvertido;
-                double saldoConvertido;
-                double limiteConvertido;
-
-                if (campos[0] is int)
+                return new Conta
                 {
-                    idConvertido = (int)campos[0];
-                }
-                else
-                {
-                    idConvertido = int.Parse(campos[0].ToString());
-                }
-
-                if (campos[4] is double)
-                {
-                    saldoConvertido = (double)campos[4];
-                }
-                else
-                {
-                    saldoConvertido = double.Parse(campos[4].ToString());
-                }
-
-                if (campos[5] is double)
-                {
-                    limiteConvertido = (double)campos[5];
-                }
-                else
-                {
-                    limiteConvertido = double.Parse(campos[5].ToString());
-                }
-
-                Conta conta = new Conta
-                {
-                    Id = idConvertido,
-                    Nome = (string)campos[1],
-                    Telefone = (string)campos[2],
-                    Cpf = (string)campos[3],
-                    Saldo = saldoConvertido,
-                    Limite = limiteConvertido
+                    Id = Convert.ToInt32(campos[0]),
+                    Nome = Convert.ToString(campos[1]),
+                    Telefone = Convert.ToString(campos[2]),
+                    Cpf = Convert.ToString(campos[3]),
+                    Saldo = Convert.ToDouble(campos[4]),
+                    Limite = Convert.ToDouble(campos[5])
                 };
-
-                return conta;
             }
             else
             {
-                Conta conta = new Conta
+                return new Conta
                 {
-                    Nome = (string)campos[0],
-                    Telefone = (string)campos[1],
-                    Cpf = (string)campos[2],
-                    Saldo = double.Parse((string)campos[3]),
-                    Limite = double.Parse((string)campos[4])
+                    Nome = Convert.ToString(campos[0]),
+                    Telefone = Convert.ToString(campos[1]),
+                    Cpf = Convert.ToString(campos[2]),
+                    Saldo = Convert.ToDouble(campos[3]),
+                    Limite = Convert.ToDouble(campos[4])
                 };
-
-                return conta;
             }
         }
 

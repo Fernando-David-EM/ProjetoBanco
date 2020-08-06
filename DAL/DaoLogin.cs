@@ -1,4 +1,5 @@
-﻿using Banco.Exceptions;
+﻿using Banco.Data;
+using Banco.Exceptions;
 using Banco.Model;
 using FirebirdSql.Data.FirebirdClient;
 using System;
@@ -17,18 +18,25 @@ namespace Banco.DAL
 
         public Login GetByUsuario(string usuario)
         {
-            var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", _connection, _transaction);
+            var connection = new DataBase().AbrirConexao();
+
+            var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", connection);
 
             var reader = command.ExecuteReader();
 
             if (reader.Read())
             {
                 var values = CreateArrayOfValues(reader);
+
+                connection.Close();
+
                 var conta = new Login();
                 return (Login)conta.SetPropertiesFromObjectArray(values);
             }
             else
             {
+                connection.Close();
+
                 throw new PesquisaSemSucessoException();
             }
         }

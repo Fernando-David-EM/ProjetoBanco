@@ -15,18 +15,25 @@ namespace Banco.DAL
 
         public Conta GetByCpf(string cpf)
         {
-            var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", _connection, _transaction);
+            var connection = new DataBase().AbrirConexao();
+
+            var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", connection);
 
             var reader = command.ExecuteReader();
 
             if (reader.Read())
             {
                 var values = CreateArrayOfValues(reader);
+
+                connection.Close();
+
                 var conta = new Conta();
                 return (Conta)conta.SetPropertiesFromObjectArray(values);
             }
             else
             {
+                connection.Close();
+
                 throw new PesquisaSemSucessoException();
             }
         }
