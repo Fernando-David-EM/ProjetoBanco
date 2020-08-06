@@ -10,16 +10,16 @@ namespace Banco.Model
     {
         public int Id { get; set; }
 
-        public abstract BaseModel SetPropertiesFromObjectArray(object[] campos);
+        public abstract BaseModel RecebeContaComPropriedadesDeCampos(object[] campos);
 
-        public abstract string GetNameOfTableColumns();
+        public abstract string RecebeNomeDasColunasDaTabelaParaSql();
 
-        public abstract string GetValueOfTableProperties();
+        public abstract string RecebeValorDasPropriedadesParaSql();
 
-        public abstract string GetColumnEqualsValue();
+        public abstract string RecebeColunasIgualValorParaSql();
 
-        public abstract string GetPropriedadeDeValidacao();
+        public abstract string RecebePropriedadeDeValidacao();
 
-        public abstract string[] GetProperties();
+        public abstract string[] RecebePropriedades();
     }
 }

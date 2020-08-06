@@ -13,9 +13,9 @@ namespace Banco.DAL
             
         }
 
-        public Conta GetByCpf(string cpf)
+        public Conta PesquisaPorCpf(string cpf)
         {
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
             var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", connection);
 
@@ -23,12 +23,12 @@ namespace Banco.DAL
 
             if (reader.Read())
             {
-                var values = CreateArrayOfValues(reader);
+                var values = CriaArrayDePropriedades(reader);
 
                 connection.Close();
 
                 var conta = new Conta();
-                return (Conta)conta.SetPropertiesFromObjectArray(values);
+                return (Conta)conta.RecebeContaComPropriedadesDeCampos(values);
             }
             else
             {
@@ -38,13 +38,13 @@ namespace Banco.DAL
             }
         }
 
-        protected override void ValidaCondicaoInsert(string validacao)
+        protected override void ValidaCondicaoDeInsercao(string validacao)
         {
             string cpf = validacao;
 
             try
             {
-                var conta = GetByCpf(cpf);
+                var conta = PesquisaPorCpf(cpf);
 
                 //Só passa dessa linha se achar um item com aquele cpf
                 throw new CpfExistenteException(cpf);
@@ -54,19 +54,19 @@ namespace Banco.DAL
                 //Significa que não achou, ou seja, pode continuar a inserção
             }
 
-            if (!ValidaCPF.IsCpf(cpf))
+            if (!ValidaCPF.EhCpf(cpf))
             {
                 throw new CpfInvalidoException(cpf);
             }
         }
 
-        protected override void ValidaCondicaoUpdate(string validacao, bool mudouPropriedadeDeValidacao)
+        protected override void ValidaCondicaoAtualizacao(string validacao, bool mudouPropriedadeDeValidacao)
         {
             string cpf = validacao;
 
             try
             {
-                var conta = GetByCpf(cpf);
+                var conta = PesquisaPorCpf(cpf);
 
                 //Só passa dessa linha se achar um item com aquele cpf
                if (mudouPropriedadeDeValidacao)
@@ -79,7 +79,7 @@ namespace Banco.DAL
                 //Significa que não achou, ou seja, pode continuar a inserção
             }
 
-            if (!ValidaCPF.IsCpf(cpf))
+            if (!ValidaCPF.EhCpf(cpf))
             {
                 throw new CpfInvalidoException(cpf);
             }

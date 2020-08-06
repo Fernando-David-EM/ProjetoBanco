@@ -29,7 +29,7 @@ namespace Banco.Model
             Limite = limite;
         }
 
-        public override BaseModel SetPropertiesFromObjectArray(object[] campos)
+        public override BaseModel RecebeContaComPropriedadesDeCampos(object[] campos)
         {
             
 
@@ -58,33 +58,33 @@ namespace Banco.Model
             }
         }
 
-        public override string[] GetProperties()
+        public override string[] RecebePropriedades()
         {
             return new string[]
             {
                 Nome,
                 Telefone,
                 Cpf,
-                Formatacao.DoubleEmReais(Saldo),
-                Formatacao.DoubleEmReais(Limite)
+                Formatacao.TransformaDinheiroEmReais(Saldo),
+                Formatacao.TransformaDinheiroEmReais(Limite)
             };
         }
 
-        public override string GetNameOfTableColumns()
+        public override string RecebeNomeDasColunasDaTabelaParaSql()
         {
             return "(con_nome,con_telefone,con_cpf,con_saldo,con_limite)";
         }
 
-        public override string GetValueOfTableProperties()
+        public override string RecebeValorDasPropriedadesParaSql()
         {
             return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',{Saldo},{Limite})";
         }
 
-        public override string GetColumnEqualsValue()
+        public override string RecebeColunasIgualValorParaSql()
         {
-            var names = SplitAndRemoveParenthesis(GetNameOfTableColumns());
+            var names = RemoveParentesis(RecebeNomeDasColunasDaTabelaParaSql());
 
-            var values = SplitAndRemoveParenthesis(GetValueOfTableProperties());
+            var values = RemoveParentesis(RecebeValorDasPropriedadesParaSql());
 
             string final = "";
 
@@ -98,12 +98,12 @@ namespace Banco.Model
             return final;
         }
 
-        public override string GetPropriedadeDeValidacao()
+        public override string RecebePropriedadeDeValidacao()
         {
             return Cpf;
         }
 
-        private List<string> SplitAndRemoveParenthesis(string text)
+        private List<string> RemoveParentesis(string text)
         {
             return 
                 text

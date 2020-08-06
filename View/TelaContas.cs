@@ -27,7 +27,7 @@ namespace Banco.View
         {
             InitializeComponent();
             _daoConta = new DaoConta();
-            PopularTable();
+            PopulaTable();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             maskedTextBoxTelefone.Mask = "(00) 00000-0000";
@@ -36,22 +36,22 @@ namespace Banco.View
             maskedTextBoxLimite.Mask = "$ 999999";
         }
 
-        private void PopularTable()
+        private void PopulaTable()
         {
             dataGridView1.Rows.Clear();
 
-            var contas = _daoConta.GetAll();
+            var contas = _daoConta.PesquisaTodos();
 
             if (contas.Count() > 0)
             {
                 foreach (var conta in contas)
                 {
-                    dataGridView1.Rows.Add(conta.GetProperties());
+                    dataGridView1.Rows.Add(conta.RecebePropriedades());
                 }
             }
         }
 
-        private void PopularCampos(Conta conta)
+        private void PopulaCampos(Conta conta)
         {
             textBoxNome.Text = conta.Nome;
             maskedTextBoxTelefone.Text = conta.Telefone;
@@ -65,35 +65,35 @@ namespace Banco.View
 
             try
             {
-                ValidarCampos();
+                ValidaCampos();
 
-                var campos = GeraCamposArrayObject(false);
+                var campos = GeraArrayDeCampos(false);
 
-                _daoConta.Insert((Conta)new Conta().SetPropertiesFromObjectArray(campos));
+                _daoConta.Insere((Conta)new Conta().RecebeContaComPropriedadesDeCampos(campos));
 
                 _clicado = false;
 
-                PopularTable();
+                PopulaTable();
             }
             catch (CampoNaoPreenchidoException ex)
             {
-                MostrarErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
+                MostraErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
             }
             catch (CpfExistenteException ex)
             {
-                MostrarErro("Cpf já existe!", ex.Message);
+                MostraErro("Cpf já existe!", ex.Message);
             }
             catch (CpfInvalidoException ex)
             {
-                MostrarErro("Cpf inválido!", ex.Message);
+                MostraErro("Cpf inválido!", ex.Message);
             }
             catch (FalhaEmInserirException ex)
             {
-                MostrarErro("", ex.Message);
+                MostraErro("", ex.Message);
             }
             catch (Exception ex)
             {
-                MostrarErro(ex.Message, ex.StackTrace);
+                MostraErro(ex.Message, ex.StackTrace);
             }
         }
 
@@ -103,35 +103,35 @@ namespace Banco.View
             {
                 try
                 {
-                    ValidarCampos();
+                    ValidaCampos();
 
-                    var campos = GeraCamposArrayObject(true);
+                    var campos = GeraArrayDeCampos(true);
 
-                    _daoConta.Update((Conta)new Conta().SetPropertiesFromObjectArray(campos), maskedTextBoxCpf.Text != _contaSelecionada.Cpf);
+                    _daoConta.Atualiza((Conta)new Conta().RecebeContaComPropriedadesDeCampos(campos), maskedTextBoxCpf.Text != _contaSelecionada.Cpf);
 
                     _clicado = false;
 
-                    PopularTable();
+                    PopulaTable();
                 }
                 catch (CampoNaoPreenchidoException ex)
                 {
-                    MostrarErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
+                    MostraErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
                 }
                 catch (CpfExistenteException ex)
                 {
-                    MostrarErro("Cpf já existe!", ex.Message);
+                    MostraErro("Cpf já existe!", ex.Message);
                 }
                 catch (CpfInvalidoException ex)
                 {
-                    MostrarErro("Cpf inválido!", ex.Message);
+                    MostraErro("Cpf inválido!", ex.Message);
                 }
                 catch (FalhaEmAtualizarException ex)
                 {
-                    MostrarErro("", ex.Message);
+                    MostraErro("", ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    MostrarErro(ex.Message, ex.StackTrace);
+                    MostraErro(ex.Message, ex.StackTrace);
                 }
             }
             else
@@ -146,27 +146,27 @@ namespace Banco.View
             {
                 try
                 {
-                    ValidarCampos();
+                    ValidaCampos();
 
-                    var campos = GeraCamposArrayObject(true);
+                    var campos = GeraArrayDeCampos(true);
 
-                    _daoConta.Delete((Conta)new Conta().SetPropertiesFromObjectArray(campos));
+                    _daoConta.Deleta((Conta)new Conta().RecebeContaComPropriedadesDeCampos(campos));
 
                     _clicado = false;
 
-                    PopularTable();
+                    PopulaTable();
                 }
                 catch (CampoNaoPreenchidoException ex)
                 {
-                    MostrarErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
+                    MostraErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
                 }
                 catch (FalhaEmDeletarException ex)
                 {
-                    MostrarErro("", ex.Message);
+                    MostraErro("", ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    MostrarErro(ex.Message, ex.StackTrace);
+                    MostraErro(ex.Message, ex.StackTrace);
                 }
             }
             else
@@ -175,15 +175,15 @@ namespace Banco.View
             }
         }
 
-        private void ValidarCampos()
+        private void ValidaCampos()
         {
             var campos = new string[]
             {
                 textBoxNome.Text,
-                Formatacao.SobraApenasNumeros(maskedTextBoxTelefone.Text),
-                Formatacao.SobraApenasNumeros(maskedTextBoxCpf.Text),
-                Formatacao.SobraApenasNumeros(maskedTextBoxSaldo.Text),
-                Formatacao.SobraApenasNumeros(maskedTextBoxLimite.Text)
+                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxTelefone.Text),
+                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxCpf.Text),
+                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxSaldo.Text),
+                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxLimite.Text)
             };
 
             var camposForamPreenchidos = campos
@@ -199,7 +199,7 @@ namespace Banco.View
             }
         }
 
-        private void MostrarErro(string msg, string ex)
+        private void MostraErro(string msg, string ex)
         {
             MessageBox.Show($"Erro: {msg}\n{ex}");
         }
@@ -216,7 +216,7 @@ namespace Banco.View
                     var cell = row.Cells[2];
                     var cpf = cell.Value.ToString();
 
-                    _contaSelecionada = _daoConta.GetByCpf(cpf);
+                    _contaSelecionada = _daoConta.PesquisaPorCpf(cpf);
 
                     _clicado = true;
                 }
@@ -226,10 +226,10 @@ namespace Banco.View
                 }
             }
 
-            PopularCampos(_contaSelecionada);
+            PopulaCampos(_contaSelecionada);
         }
 
-        private object[] GeraCamposArrayObject(bool deveGerarId)
+        private object[] GeraArrayDeCampos(bool deveGerarId)
         {
 
             if (deveGerarId)
@@ -240,8 +240,8 @@ namespace Banco.View
                 textBoxNome.Text,
                 maskedTextBoxTelefone.Text,
                 maskedTextBoxCpf.Text,
-                Formatacao.RemoveReais(maskedTextBoxSaldo.Text),
-                Formatacao.RemoveReais(maskedTextBoxLimite.Text)
+                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxSaldo.Text),
+                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxLimite.Text)
             };
             }
             else
@@ -251,8 +251,8 @@ namespace Banco.View
                 textBoxNome.Text,
                 maskedTextBoxTelefone.Text,
                 maskedTextBoxCpf.Text,
-                Formatacao.RemoveReais(maskedTextBoxSaldo.Text),
-                Formatacao.RemoveReais(maskedTextBoxLimite.Text)
+                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxSaldo.Text),
+                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxLimite.Text)
             };
             }
 

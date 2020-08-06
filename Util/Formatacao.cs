@@ -10,21 +10,21 @@ namespace Banco.Util
 {
     class Formatacao
     {
-        public static string DoubleEmReais(double numero)
+        public static string TransformaDinheiroEmReais(double numero)
         {
             return numero.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR")); //Type conversion
         }
 
-        public static double RemoveReais(string numero)
+        public static double RemoveSimboloDeDinheiro(string numero)
         {
             return Convert.ToDouble(Regex.Replace(numero, "[^0-9]", string.Empty));
         }
-        public static string SobraApenasNumeros(string numero)
+        public static string RemoveTudoMenosNumeros(string numero)
         {   
             return Regex.Replace(numero, "[^0-9]", string.Empty);
         }
 
-        public static string RemoveSimbolos(string texto)
+        public static string RemoveTudoMenosLetras(string texto)
         {
             return Regex.Replace(texto, "[^a-z,A-Z]", string.Empty);
         }

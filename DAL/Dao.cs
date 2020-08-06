@@ -21,13 +21,13 @@ namespace Banco.DAL
             _nomeTabela = nomeTabela;
         }
 
-        public virtual void Insert(T item)
+        public virtual void Insere(T item)
         {
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
-            ValidaCondicaoInsert(item.GetPropriedadeDeValidacao());
+            ValidaCondicaoDeInsercao(item.RecebePropriedadeDeValidacao());
 
-            var command = new FbCommand($"insert into {_nomeTabela} {item.GetNameOfTableColumns()} values {item.GetValueOfTableProperties()}", connection);
+            var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
 
             var resultado = command.ExecuteNonQuery();
 
@@ -39,13 +39,13 @@ namespace Banco.DAL
             }
         }
 
-        public virtual void Update(T item, bool mudouPropriedadeDeValidacao)
+        public virtual void Atualiza(T item, bool mudouPropriedadeDeValidacao)
         {
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
-            ValidaCondicaoUpdate(item.GetPropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
+            ValidaCondicaoAtualizacao(item.RecebePropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
 
-            var command = new FbCommand($"update {_nomeTabela} set {item.GetColumnEqualsValue()} where id = {item.Id}", connection);
+            var command = new FbCommand($"update {_nomeTabela} set {item.RecebeColunasIgualValorParaSql()} where id = {item.Id}", connection);
 
             var resultado = command.ExecuteNonQuery();
 
@@ -57,18 +57,18 @@ namespace Banco.DAL
             }
         }
 
-        public void Delete(T item)
+        public void Deleta(T item)
         {
             try
             {
-                GetByID(item.Id);
+                PesquisaPorId(item.Id);
             }
             catch (PesquisaSemSucessoException ex)
             {
                 throw new FalhaEmDeletarException("Erro em deletar : item inexistente!", ex);
             }
 
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
             var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
 
@@ -84,18 +84,18 @@ namespace Banco.DAL
             }
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> PesquisaTodos()
         {
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
             var command = new FbCommand($"select * from {_nomeTabela}", connection);
 
-            return Search(command, connection);
+            return Pesquisa(command, connection);
         }
 
-        public T GetByID(int id)
+        public T PesquisaPorId(int id)
         {
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
             var command = new FbCommand($"select * from {_nomeTabela} where id = {id}", connection);
 
@@ -103,11 +103,11 @@ namespace Banco.DAL
 
             if (reader.Read())
             {
-                var values = CreateArrayOfValues(reader);
+                var values = CriaArrayDePropriedades(reader);
 
                 connection.Close();
 
-                return (T)new T().SetPropertiesFromObjectArray(values);
+                return (T)new T().RecebeContaComPropriedadesDeCampos(values);
             }
             else
             {
@@ -117,7 +117,7 @@ namespace Banco.DAL
             }
         }
 
-        protected IEnumerable<T> Search(FbCommand command, FbConnection connection)
+        protected IEnumerable<T> Pesquisa(FbCommand command, FbConnection connection)
         {
             var reader = command.ExecuteReader();
 
@@ -125,26 +125,26 @@ namespace Banco.DAL
 
             while (reader.Read())
             {
-                var values = CreateArrayOfValues(reader);
+                var values = CriaArrayDePropriedades(reader);
                 objects.Add(values);
             }
 
             connection.Close();
 
-            return CreateList(objects);
+            return CriaListaDePropriedades(objects);
         }
 
-        protected IEnumerable<T> CreateList(List<object[]> objects)
+        protected IEnumerable<T> CriaListaDePropriedades(List<object[]> objects)
         {
             List<T> contas = new List<T>();
 
             objects
-                .ForEach(x => contas.Add((T)new T().SetPropertiesFromObjectArray(x)));
+                .ForEach(x => contas.Add((T)new T().RecebeContaComPropriedadesDeCampos(x)));
 
             return contas;
         }
 
-        protected object[] CreateArrayOfValues(FbDataReader reader)
+        protected object[] CriaArrayDePropriedades(FbDataReader reader)
         {
             var values = new object[reader.FieldCount];
             reader.GetValues(values);
@@ -152,7 +152,7 @@ namespace Banco.DAL
             return values;
         }
 
-        protected abstract void ValidaCondicaoInsert(string validacao);
-        protected abstract void ValidaCondicaoUpdate(string validacao, bool mudouPropriedadeDeValidacao);
+        protected abstract void ValidaCondicaoDeInsercao(string validacao);
+        protected abstract void ValidaCondicaoAtualizacao(string validacao, bool mudouPropriedadeDeValidacao);
     }
 }

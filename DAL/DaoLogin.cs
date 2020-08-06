@@ -16,9 +16,9 @@ namespace Banco.DAL
         {
         }
 
-        public Login GetByUsuario(string usuario)
+        public Login PesquisaPorUsuario(string usuario)
         {
-            var connection = new DataBase().AbrirConexao();
+            var connection = DataBase.AbreConexao();
 
             var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", connection);
 
@@ -26,12 +26,12 @@ namespace Banco.DAL
 
             if (reader.Read())
             {
-                var values = CreateArrayOfValues(reader);
+                var values = CriaArrayDePropriedades(reader);
 
                 connection.Close();
 
                 var conta = new Login();
-                return (Login)conta.SetPropertiesFromObjectArray(values);
+                return (Login)conta.RecebeContaComPropriedadesDeCampos(values);
             }
             else
             {
@@ -45,7 +45,7 @@ namespace Banco.DAL
         {
             try
             {
-                var login = GetByUsuario(usuario);
+                var login = PesquisaPorUsuario(usuario);
 
                 if (login.Senha == senha)
                 {
@@ -65,13 +65,13 @@ namespace Banco.DAL
             
         }
 
-        protected override void ValidaCondicaoInsert(string validacao)
+        protected override void ValidaCondicaoDeInsercao(string validacao)
         {
             string usuario = validacao;
 
             try
             {
-                var login = GetByUsuario(usuario);
+                var login = PesquisaPorUsuario(usuario);
 
                 //Só passa dessa linha se achar um item com aquele usuario
                 throw new UsuarioExistenteException(usuario);
@@ -82,13 +82,13 @@ namespace Banco.DAL
             }
         }
 
-        protected override void ValidaCondicaoUpdate(string validacao, bool mudouPropriedadeDeValidacao)
+        protected override void ValidaCondicaoAtualizacao(string validacao, bool mudouPropriedadeDeValidacao)
         {
             string usuario = validacao;
 
             try
             {
-                var login = GetByUsuario(usuario);
+                var login = PesquisaPorUsuario(usuario);
 
                 //Só passa dessa linha se achar um item com aquele usuario
                 if (mudouPropriedadeDeValidacao)

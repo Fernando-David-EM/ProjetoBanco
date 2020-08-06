@@ -22,11 +22,11 @@ namespace Banco.Model
             Senha = senha;
         }
 
-        public override string GetColumnEqualsValue()
+        public override string RecebeColunasIgualValorParaSql()
         {
-            var names = SplitAndRemoveParenthesis(GetNameOfTableColumns());
+            var names = RemoveParentesis(RecebeNomeDasColunasDaTabelaParaSql());
 
-            var values = SplitAndRemoveParenthesis(GetValueOfTableProperties());
+            var values = RemoveParentesis(RecebeValorDasPropriedadesParaSql());
 
             string final = "(";
 
@@ -40,17 +40,17 @@ namespace Banco.Model
             return final;
         }
 
-        public override string GetNameOfTableColumns()
+        public override string RecebeNomeDasColunasDaTabelaParaSql()
         {
             return "(log_usuario,log_senha)";
         }
 
-        public override string GetValueOfTableProperties()
+        public override string RecebeValorDasPropriedadesParaSql()
         {
             return $"(\'{Usuario}\',\'{Senha}\')";
         }
 
-        public override string[] GetProperties()
+        public override string[] RecebePropriedades()
         {
             return new string[]
             {
@@ -59,7 +59,7 @@ namespace Banco.Model
             };
         }
 
-        public override BaseModel SetPropertiesFromObjectArray(object[] campos)
+        public override BaseModel RecebeContaComPropriedadesDeCampos(object[] campos)
         {
             Login login = new Login
             {
@@ -70,7 +70,7 @@ namespace Banco.Model
 
             return login;
         }
-        private List<string> SplitAndRemoveParenthesis(string text)
+        private List<string> RemoveParentesis(string text)
         {
             return
                 text
@@ -96,7 +96,7 @@ namespace Banco.Model
             return hashCode;
         }
 
-        public override string GetPropriedadeDeValidacao()
+        public override string RecebePropriedadeDeValidacao()
         {
             return Usuario;
         }

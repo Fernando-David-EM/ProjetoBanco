@@ -48,9 +48,9 @@ namespace Banco.Steps
         [Then(@"uma nova conta deve ser cadastrada ao cadastrar")]
         public void EntaoUmaNovaContaDeveSerCadastrada()
         {
-            _daoConta.Insert(_contaAtual);
+            _daoConta.Insere(_contaAtual);
 
-            var pesquisaConta = _daoConta.GetByCpf(_cpfValido);
+            var pesquisaConta = _daoConta.PesquisaPorCpf(_cpfValido);
 
             _contaAtual.Id = pesquisaConta.Id;
 
@@ -82,9 +82,9 @@ namespace Banco.Steps
                     1000.0
                 );
 
-            _daoConta.Insert(conta);
+            _daoConta.Insere(conta);
 
-            var pesquisaConta = _daoConta.GetByCpf(p0);
+            var pesquisaConta = _daoConta.PesquisaPorCpf(p0);
 
             Assert.AreEqual(p0, pesquisaConta.Cpf);
         }
@@ -106,7 +106,7 @@ namespace Banco.Steps
         [Then(@"devo ver um erro de cpf existente ""(.*)"" ao cadastrar")]
         public void EntaoDevoVerUmErroDeCpfExistente(string p0)
         {
-            var ex = Assert.Throws<CpfExistenteException>(() => _daoConta.Insert(_contaAtual));
+            var ex = Assert.Throws<CpfExistenteException>(() => _daoConta.Insere(_contaAtual));
             Assert.That(ex.Message, Is.EqualTo(p0));
         }
 
@@ -127,7 +127,7 @@ namespace Banco.Steps
         [Then(@"devo ver um erro de cpf invalido ""(.*)"" ao cadastrar")]
         public void EntaoDevoVerUmErroDeCpfInvalido(string p0)
         {
-            var ex = Assert.Throws<CpfInvalidoException>(() => _daoConta.Insert(_contaAtual));
+            var ex = Assert.Throws<CpfInvalidoException>(() => _daoConta.Insere(_contaAtual));
             Assert.That(ex.Message, Is.EqualTo(p0));
         }
 

@@ -8,7 +8,7 @@ namespace Banco.Util
     /// </summary>
     public static class ValidaCPF
     {
-        public static bool IsCpf(string cpf)
+        public static bool EhCpf(string cpf)
         {
             if (string.IsNullOrEmpty(cpf))
                 return false;

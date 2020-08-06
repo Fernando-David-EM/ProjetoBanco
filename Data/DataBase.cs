@@ -4,7 +4,7 @@ namespace Banco.Data
 {
     class DataBase 
     {
-        public FbConnection AbrirConexao()
+        public static FbConnection AbreConexao()
         {
             var conexao = new FbConnection(
                 @"ServerType=0;
