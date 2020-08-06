@@ -1,5 +1,6 @@
 ﻿using Banco.DAL;
 using Banco.Exceptions;
+using Banco.Util;
 using Banco.View;
 using System;
 using System.Collections.Generic;
@@ -27,10 +28,24 @@ namespace Banco
             maskedTextBoxSenha.PasswordChar = '*';
         }
 
+        private void ValidaCampos()
+        {
+            if (string.IsNullOrEmpty(textBoxUsuario.Text))
+            {
+                throw new CampoNaoPreenchidoException("Usuário");
+            }
+            if (string.IsNullOrEmpty(maskedTextBoxSenha.Text))
+            {
+                throw new CampoNaoPreenchidoException("Senha");
+            }
+        }
+
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             try
             {
+                ValidaCampos();
+
                 string usuario = textBoxUsuario.Text;
                 string senha = maskedTextBoxSenha.Text;
 
@@ -41,6 +56,11 @@ namespace Banco
                     UsuarioAutenticado = true;
                     Close();
                 }
+
+            }
+            catch (CampoNaoPreenchidoException ex)
+            {
+                MessageBox.Show($"Erro: Campo {ex.Message} deve ser preenchido!");
 
             }
             catch (PesquisaSemSucessoException ex)
