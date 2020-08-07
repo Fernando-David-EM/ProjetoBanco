@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public UsuarioExistenteException(string message)
-            : base(message)
+            : base("Usuário já existe!\n" + message)
         {
         }
 

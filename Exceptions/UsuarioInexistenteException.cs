@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public UsuarioInexistenteException(string message)
-            : base(message)
+            : base("Usuário não existe!\n" + message)
         {
         }
 

@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public CampoNaoPreenchidoException(string message)
-            : base(message)
+            : base("Campo não preenchido!\n" + message)
         {
         }
 

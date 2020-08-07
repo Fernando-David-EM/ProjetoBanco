@@ -96,22 +96,6 @@ namespace Banco.View
 
                 PopulaTable();
             }
-            catch (CampoNaoPreenchidoException ex)
-            {
-                MostraErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
-            }
-            catch (CpfExistenteException ex)
-            {
-                MostraErro("Cpf já existe!", ex.Message);
-            }
-            catch (CpfInvalidoException ex)
-            {
-                MostraErro("Cpf inválido!", ex.Message);
-            }
-            catch (FalhaEmInserirException ex)
-            {
-                MostraErro("", ex.Message);
-            }
             catch (Exception ex)
             {
                 MostraErro(ex.Message, ex.StackTrace);
@@ -134,22 +118,6 @@ namespace Banco.View
 
                     PopulaTable();
                 }
-                catch (CampoNaoPreenchidoException ex)
-                {
-                    MostraErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
-                }
-                catch (CpfExistenteException ex)
-                {
-                    MostraErro("Cpf já existe!", ex.Message);
-                }
-                catch (CpfInvalidoException ex)
-                {
-                    MostraErro("Cpf inválido!", ex.Message);
-                }
-                catch (FalhaEmAtualizarException ex)
-                {
-                    MostraErro("", ex.Message);
-                }
                 catch (Exception ex)
                 {
                     MostraErro(ex.Message, ex.StackTrace);
@@ -157,7 +125,7 @@ namespace Banco.View
             }
             else
             {
-                MessageBox.Show("É necessário clicar numa linha da tabela para executar essa ação!");
+                MessageBox.Show("É necessário clicar em uma linha da tabela para executar essa ação!");
             }
         }
 
@@ -177,14 +145,6 @@ namespace Banco.View
 
                     PopulaTable();
                 }
-                catch (CampoNaoPreenchidoException ex)
-                {
-                    MostraErro("Todos os campos devem ser preenchidos corretamente", ex.Message);
-                }
-                catch (FalhaEmDeletarException ex)
-                {
-                    MostraErro("", ex.Message);
-                }
                 catch (Exception ex)
                 {
                     MostraErro(ex.Message, ex.StackTrace);
@@ -192,7 +152,7 @@ namespace Banco.View
             }
             else
             {
-                MessageBox.Show("É necessário clicar numa linha da tabela para executar essa ação!");
+                MessageBox.Show("É necessário clicar em uma linha da tabela para executar essa ação!");
             }
         }
 
@@ -216,7 +176,7 @@ namespace Banco.View
             }
             if (campos[1].Length < 11 || !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
             {
-                throw new CampoNaoPreenchidoException("Campo Celular");
+                throw new CampoNaoPreenchidoException("Celular");
             }
         }
 

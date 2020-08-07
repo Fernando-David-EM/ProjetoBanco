@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public SenhaIncorretaException(string message)
-            : base(message)
+            : base("Senha incorreta!\n" + message)
         {
         }
 

@@ -33,7 +33,7 @@ namespace Banco.DAL
 
             if (resultado == 0)
             {
-                throw new FalhaEmInserirException();
+                throw new FalhaEmInserirException("_nomeTabela");
             }
         }
 
@@ -49,7 +49,7 @@ namespace Banco.DAL
 
             if (resultado == 0)
             {
-                throw new FalhaEmAtualizarException();
+                throw new FalhaEmAtualizarException("_nomeTabela");
             }
 
         }
@@ -60,9 +60,9 @@ namespace Banco.DAL
             {
                 PesquisaPorId(item.Id);
             }
-            catch (PesquisaSemSucessoException ex)
+            catch (PesquisaSemSucessoException)
             {
-                throw new FalhaEmDeletarException("Erro em deletar : item inexistente!", ex);
+                throw new FalhaEmDeletarException("_nomeTabela");
             }
 
             using var connection = DataBase.AbreConexao();
@@ -73,7 +73,7 @@ namespace Banco.DAL
 
             if (resultado == 0)
             {
-                throw new FalhaEmDeletarException("Erro em deletar : erro no sql!");
+                throw new FalhaEmDeletarException("_nomeTabela");
             }
 
         }
@@ -104,7 +104,7 @@ namespace Banco.DAL
             }
             else
             {
-                throw new PesquisaSemSucessoException();
+                throw new PesquisaSemSucessoException("_nomeTabela");
             }
 
         }

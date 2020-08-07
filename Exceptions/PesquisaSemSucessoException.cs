@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public PesquisaSemSucessoException(string message)
-            : base(message)
+            : base("Falha no sql de pesquisa!\nTabela : " + message)
         {
         }
 

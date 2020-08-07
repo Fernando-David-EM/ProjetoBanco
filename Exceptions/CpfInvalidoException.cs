@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public CpfInvalidoException(string message)
-            : base(message)
+            : base("Cpf inválido!\n" + message)
         {
         }
 

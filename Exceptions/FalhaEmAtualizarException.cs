@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public FalhaEmAtualizarException(string message)
-            : base(message)
+            : base("Falha no sql de atualizaçao!\nTabela : "" + message)
         {
         }
 

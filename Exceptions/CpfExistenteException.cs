@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public CpfExistenteException(string message)
-            : base(message)
+            : base("Cpf existente!\n" + message)
         {
         }
 
