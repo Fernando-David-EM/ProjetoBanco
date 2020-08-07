@@ -140,8 +140,6 @@ namespace Banco.View
             {
                 try
                 {
-                    ValidaCampos();
-
                     var campos = GeraListaDeCampos(true);
 
                     _daoConta.Deleta(new Conta(campos));
@@ -179,9 +177,13 @@ namespace Banco.View
 
         private void VerificaTamanhoTelefone()
         {
-            if (maskedTextBoxTelefone.Text.Length < 14 || !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
+            if (maskedTextBoxTelefone.Text.Length < 14)
             {
                 throw new CampoNaoPreenchidoException("Celular");
+            }
+            if (!Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
+            {
+                throw new TelefoneInvalidoException(maskedTextBoxTelefone.Text);
             }
         }
 

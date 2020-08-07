@@ -157,6 +157,7 @@
     <Compile Include="Exceptions\FalhaEmInserirException.cs" />
     <Compile Include="Exceptions\PesquisaSemSucessoException.cs" />
     <Compile Include="Exceptions\SenhaIncorretaException.cs" />
+    <Compile Include="Exceptions\TelefoneInvalidoException.cs" />
     <Compile Include="Exceptions\UsuarioExistenteException.cs" />
     <Compile Include="Exceptions\UsuarioInexistenteException.cs" />
     <Compile Include="Util\Formatacao.cs" />

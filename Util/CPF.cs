@@ -72,16 +72,15 @@ namespace Banco.Util
 
         public static bool EhCpf(string cpf)
         {
-            if (string.IsNullOrEmpty(cpf))
+            string SoNumero = Regex.Replace(cpf, "[^0-9]", string.Empty);
+
+            if (string.IsNullOrEmpty(SoNumero))
                 return false;
             else
             {
                 int[] d = new int[11];
                 int[] v = new int[2];
                 int j, i, soma;
-                string SoNumero;
-
-                SoNumero = Regex.Replace(cpf, "[^0-9]", string.Empty);
 
                 //verificando se todos os numeros são iguais
                 if (new string(SoNumero[0], SoNumero.Length) == SoNumero) return false;
