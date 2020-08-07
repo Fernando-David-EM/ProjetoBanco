@@ -28,6 +28,7 @@ namespace Banco.Model
                 Id = Convert.ToInt32(propriedades.First());
                 propriedades.RemoveAt(0);
             }
+
             Usuario = Convert.ToString(propriedades[0]);
             Senha = Convert.ToString(propriedades[1]);
         }

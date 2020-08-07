@@ -117,7 +117,7 @@ namespace Banco.View
 
                     var campos = GeraListaDeCampos(true);
 
-                    _daoConta.Atualiza(new Conta(campos), maskedTextBoxCpf.Text != _contaSelecionada.Cpf);
+                    _daoConta.Atualiza(new Conta(campos));
 
                     _clicado = false;
 
@@ -165,6 +165,7 @@ namespace Banco.View
         {
             var campos = GeraDicionarioDeCampos();
 
+            VerificaCpf();
             VerificaTamanhoTelefone();
 
             foreach (var campo in campos)
@@ -181,6 +182,14 @@ namespace Banco.View
             if (maskedTextBoxTelefone.Text.Length < 14 || !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
             {
                 throw new CampoNaoPreenchidoException("Celular");
+            }
+        }
+
+        private void VerificaCpf()
+        {
+            if (!Util.CPF.EhCpf(maskedTextBoxCpf.Text))
+            {
+                throw new CpfInvalidoException(maskedTextBoxCpf.Text);
             }
         }
 

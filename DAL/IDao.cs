@@ -10,7 +10,7 @@ namespace Banco.DAL
     interface IDao<T> where T : BaseModel
     {
         void Insere(T item);
-        void Atualiza(T item, bool mudouPropriedadeDeValidacao);
+        void Atualiza(T item);
         void Deleta(T item);
         List<T> PesquisaTodos();
         T PesquisaPorId(int id);

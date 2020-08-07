@@ -37,7 +37,7 @@ namespace Banco.DAL
             }
         }
 
-        public virtual void Atualiza(T item, bool mudouPropriedadeDeValidacao)
+        public virtual void Atualiza(T item)
         {
             using var connection = DataBase.AbreConexao();
 

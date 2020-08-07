@@ -1,4 +1,5 @@
-﻿using Banco.Util;
+﻿using Banco.Exceptions;
+using Banco.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
