@@ -48,12 +48,12 @@ namespace Banco.View
             this.buttonCadastrar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Telefone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CPF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Limite = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.daoContaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Limite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CPF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Telefone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -237,37 +237,9 @@ namespace Banco.View
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // Nome
+            // daoContaBindingSource
             // 
-            this.Nome.Frozen = true;
-            this.Nome.HeaderText = "Nome";
-            this.Nome.Name = "Nome";
-            this.Nome.ReadOnly = true;
-            this.Nome.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Telefone
-            // 
-            this.Telefone.Frozen = true;
-            this.Telefone.HeaderText = "Telefone";
-            this.Telefone.Name = "Telefone";
-            this.Telefone.ReadOnly = true;
-            this.Telefone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // CPF
-            // 
-            this.CPF.Frozen = true;
-            this.CPF.HeaderText = "CPF";
-            this.CPF.Name = "CPF";
-            this.CPF.ReadOnly = true;
-            this.CPF.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Saldo
-            // 
-            this.Saldo.Frozen = true;
-            this.Saldo.HeaderText = "Saldo";
-            this.Saldo.Name = "Saldo";
-            this.Saldo.ReadOnly = true;
-            this.Saldo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.daoContaBindingSource.DataSource = typeof(Banco.DAL.DaoConta);
             // 
             // Limite
             // 
@@ -277,9 +249,37 @@ namespace Banco.View
             this.Limite.ReadOnly = true;
             this.Limite.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // daoContaBindingSource
+            // Saldo
             // 
-            this.daoContaBindingSource.DataSource = typeof(Banco.DAL.DaoConta);
+            this.Saldo.Frozen = true;
+            this.Saldo.HeaderText = "Saldo";
+            this.Saldo.Name = "Saldo";
+            this.Saldo.ReadOnly = true;
+            this.Saldo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // CPF
+            // 
+            this.CPF.Frozen = true;
+            this.CPF.HeaderText = "CPF";
+            this.CPF.Name = "CPF";
+            this.CPF.ReadOnly = true;
+            this.CPF.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Telefone
+            // 
+            this.Telefone.Frozen = true;
+            this.Telefone.HeaderText = "Telefone";
+            this.Telefone.Name = "Telefone";
+            this.Telefone.ReadOnly = true;
+            this.Telefone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Nome
+            // 
+            this.Nome.Frozen = true;
+            this.Nome.HeaderText = "Nome";
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            this.Nome.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // TelaContas
             // 
@@ -317,15 +317,15 @@ namespace Banco.View
         private System.Windows.Forms.Button buttonAlterar;
         private System.Windows.Forms.Button buttonCadastrar;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Telefone;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CPF;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Saldo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Limite;
         private System.Windows.Forms.BindingSource daoContaBindingSource;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxLimite;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxSaldo;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxCpf;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxTelefone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Telefone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CPF;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Saldo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Limite;
     }
 }

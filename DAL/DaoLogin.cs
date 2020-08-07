@@ -18,26 +18,23 @@ namespace Banco.DAL
 
         public Login PesquisaPorUsuario(string usuario)
         {
-            var connection = DataBase.AbreConexao();
-
-            var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", connection);
-
-            var reader = command.ExecuteReader();
-
-            if (reader.Read())
+            using (var connection = DataBase.AbreConexao())
             {
-                var values = CriaArrayDePropriedades(reader);
 
-                connection.Close();
+                var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", connection);
 
-                var conta = new Login();
-                return (Login)conta.RecebeContaComPropriedadesDeCampos(values);
-            }
-            else
-            {
-                connection.Close();
+                var reader = command.ExecuteReader();
 
-                throw new PesquisaSemSucessoException();
+                if (reader.Read())
+                {
+                    var values = CriaListaDePropriedades(reader);
+
+                    return new Login(values);
+                }
+                else
+                {
+                    throw new PesquisaSemSucessoException();
+                }
             }
         }
 

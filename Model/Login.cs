@@ -16,10 +16,20 @@ namespace Banco.Model
 
         }
 
-        public Login(string usuario, string senha)
+        public Login(List<object> propriedades) : base(propriedades)
         {
-            Usuario = usuario;
-            Senha = senha;
+
+        }
+
+        protected override void InserePropriedades(List<object> propriedades)
+        {
+            if (propriedades.Count > 5)
+            {
+                Id = Convert.ToInt32(propriedades.First());
+                propriedades.RemoveAt(0);
+            }
+            Usuario = Convert.ToString(propriedades[0]);
+            Senha = Convert.ToString(propriedades[1]);
         }
 
         public override string RecebeColunasIgualValorParaSql()
@@ -57,26 +67,6 @@ namespace Banco.Model
                 Usuario,
                 Senha
             };
-        }
-
-        public override BaseModel RecebeContaComPropriedadesDeCampos(object[] campos)
-        {
-            Login login = new Login
-            {
-                Id = (int)campos[0],
-                Usuario = (string)campos[1],
-                Senha = (string)campos[2]
-            };
-
-            return login;
-        }
-        private List<string> RemoveParentesis(string text)
-        {
-            return
-                text
-                .Split(',')
-                .Select(x => x.Trim('(', ')'))
-                .ToList();
         }
 
         public override bool Equals(object obj)

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Banco.DAL
 {
-    abstract class Dao<T> : IDao<T> where T : BaseModel, new()
+    abstract class Dao<T> : IDao<T> where T : BaseModel
     {
         protected readonly string _nomeTabela;
 
@@ -23,37 +23,35 @@ namespace Banco.DAL
 
         public virtual void Insere(T item)
         {
-            var connection = DataBase.AbreConexao();
-
-            ValidaCondicaoDeInsercao(item.RecebePropriedadeDeValidacao());
-
-            var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
-
-            var resultado = command.ExecuteNonQuery();
-
-            connection.Close();
-
-            if (resultado == 0)
+            using (var connection = DataBase.AbreConexao()) 
             {
-                throw new FalhaEmInserirException();
+                ValidaCondicaoDeInsercao(item.RecebePropriedadeDeValidacao());
+
+                var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
+
+                var resultado = command.ExecuteNonQuery();
+
+                if (resultado == 0)
+                {
+                    throw new FalhaEmInserirException();
+                }
             }
         }
 
         public virtual void Atualiza(T item, bool mudouPropriedadeDeValidacao)
         {
-            var connection = DataBase.AbreConexao();
-
-            ValidaCondicaoAtualizacao(item.RecebePropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
-
-            var command = new FbCommand($"update {_nomeTabela} set {item.RecebeColunasIgualValorParaSql()} where id = {item.Id}", connection);
-
-            var resultado = command.ExecuteNonQuery();
-
-            connection.Close();
-
-            if (resultado == 0)
+            using (var connection = DataBase.AbreConexao())
             {
-                throw new FalhaEmAtualizarException();
+                ValidaCondicaoAtualizacao(item.RecebePropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
+
+                var command = new FbCommand($"update {_nomeTabela} set {item.RecebeColunasIgualValorParaSql()} where id = {item.Id}", connection);
+
+                var resultado = command.ExecuteNonQuery();
+
+                if (resultado == 0)
+                {
+                    throw new FalhaEmAtualizarException();
+                }
             }
         }
 
@@ -68,88 +66,81 @@ namespace Banco.DAL
                 throw new FalhaEmDeletarException("Erro em deletar : item inexistente!", ex);
             }
 
-            var connection = DataBase.AbreConexao();
-
-            var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
-
-            var resultado = command.ExecuteNonQuery();
-
-            connection.Close();
-
-            if (resultado == 0)
+            using (var connection = DataBase.AbreConexao())
             {
-                connection.Close();
+                var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
 
-                throw new FalhaEmDeletarException("Erro em deletar : erro no sql!");
+                var resultado = command.ExecuteNonQuery();
+
+                if (resultado == 0)
+                {
+                    throw new FalhaEmDeletarException("Erro em deletar : erro no sql!");
+                }
             }
         }
 
         public IEnumerable<T> PesquisaTodos()
         {
-            var connection = DataBase.AbreConexao();
+            using (var connection = DataBase.AbreConexao())
+            {
+                var command = new FbCommand($"select * from {_nomeTabela}", connection);
 
-            var command = new FbCommand($"select * from {_nomeTabela}", connection);
-
-            return Pesquisa(command, connection);
+                return Pesquisa(command);
+            }
         }
 
         public T PesquisaPorId(int id)
         {
-            var connection = DataBase.AbreConexao();
-
-            var command = new FbCommand($"select * from {_nomeTabela} where id = {id}", connection);
-
-            var reader = command.ExecuteReader();
-
-            if (reader.Read())
+            using (var connection = DataBase.AbreConexao())
             {
-                var values = CriaArrayDePropriedades(reader);
+                var command = new FbCommand($"select * from {_nomeTabela} where id = {id}", connection);
 
-                connection.Close();
+                var reader = command.ExecuteReader();
 
-                return (T)new T().RecebeContaComPropriedadesDeCampos(values);
-            }
-            else
-            {
-                connection.Close();
+                if (reader.Read())
+                {
+                    var values = CriaListaDePropriedades(reader);
 
-                throw new PesquisaSemSucessoException();
+                    return (T)Activator.CreateInstance(typeof(T), values);
+                }
+                else
+                {
+                    throw new PesquisaSemSucessoException();
+                }
             }
         }
 
-        protected IEnumerable<T> Pesquisa(FbCommand command, FbConnection connection)
+        protected IEnumerable<T> Pesquisa(FbCommand command)
         {
             var reader = command.ExecuteReader();
 
-            List<object[]> objects = new List<object[]>();
+            List<List<object>> objects = new List<List<object>>();
 
             while (reader.Read())
             {
-                var values = CriaArrayDePropriedades(reader);
+                var values = CriaListaDePropriedades(reader);
                 objects.Add(values);
             }
-
-            connection.Close();
 
             return CriaListaDePropriedades(objects);
         }
 
-        protected IEnumerable<T> CriaListaDePropriedades(List<object[]> objects)
+        protected IEnumerable<T> CriaListaDePropriedades(List<List<object>> objects)
         {
             List<T> contas = new List<T>();
 
             objects
-                .ForEach(x => contas.Add((T)new T().RecebeContaComPropriedadesDeCampos(x)));
+                .ForEach(x => contas.Add((T)Activator.CreateInstance(typeof(T), x.ToList())));
 
             return contas;
         }
 
-        protected object[] CriaArrayDePropriedades(FbDataReader reader)
+        protected List<object> CriaListaDePropriedades(FbDataReader reader)
         {
             var values = new object[reader.FieldCount];
             reader.GetValues(values);
 
-            return values;
+            return values.ToList();
         }
 
         protected abstract void ValidaCondicaoDeInsercao(string validacao);

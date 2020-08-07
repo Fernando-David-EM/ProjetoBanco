@@ -8,9 +8,19 @@ namespace Banco.Model
 {
     abstract class BaseModel
     {
-        public int Id { get; set; }
+        public BaseModel(List<object> propriedades)
+        {
+            InserePropriedades(propriedades);
+        }
 
-        public abstract BaseModel RecebeContaComPropriedadesDeCampos(object[] campos);
+        public BaseModel() 
+        { 
+        
+        }
+
+        protected abstract void InserePropriedades(List<object> propriedades);
+
+        public int Id { get; set; }
 
         public abstract string RecebeNomeDasColunasDaTabelaParaSql();
 
@@ -21,5 +31,13 @@ namespace Banco.Model
         public abstract string RecebePropriedadeDeValidacao();
 
         public abstract string[] RecebePropriedades();
+        protected List<string> RemoveParentesis(string text)
+        {
+            return
+                text
+                .Split(',')
+                .Select(x => x.Trim('(', ')'))
+                .ToList();
+        }
     }
 }

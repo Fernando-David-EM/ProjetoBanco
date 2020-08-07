@@ -20,42 +20,23 @@ namespace Banco.Model
 
         }
 
-        public Conta(string nome, string telefone, string cpf, double saldo, double limite)
-        {
-            Nome = nome;
-            Telefone = telefone;
-            Cpf = cpf;
-            Saldo = saldo;
-            Limite = limite;
-        }
-
-        public override BaseModel RecebeContaComPropriedadesDeCampos(object[] campos)
+        public Conta(List<object> propriedades) : base(propriedades)
         {
             
+        }
 
-            if (campos.Length == 6)
+        protected override void InserePropriedades(List<object> propriedades)
+        {
+            if (propriedades.Count > 5)
             {
-                return new Conta
-                {
-                    Id = Convert.ToInt32(campos[0]),
-                    Nome = Convert.ToString(campos[1]),
-                    Telefone = Convert.ToString(campos[2]),
-                    Cpf = Convert.ToString(campos[3]),
-                    Saldo = Convert.ToDouble(campos[4]),
-                    Limite = Convert.ToDouble(campos[5])
-                };
+                Id = Convert.ToInt32(propriedades.First());
+                propriedades.RemoveAt(0);
             }
-            else
-            {
-                return new Conta
-                {
-                    Nome = Convert.ToString(campos[0]),
-                    Telefone = Convert.ToString(campos[1]),
-                    Cpf = Convert.ToString(campos[2]),
-                    Saldo = Convert.ToDouble(campos[3]),
-                    Limite = Convert.ToDouble(campos[4])
-                };
-            }
+            Nome = Convert.ToString(propriedades[0]);
+            Telefone = Convert.ToString(propriedades[1]);
+            Cpf = Convert.ToString(propriedades[2]);
+            Saldo = Convert.ToDouble(propriedades[3]);
+            Limite = Convert.ToDouble(propriedades[4]);
         }
 
         public override string[] RecebePropriedades()
@@ -101,15 +82,6 @@ namespace Banco.Model
         public override string RecebePropriedadeDeValidacao()
         {
             return Cpf;
-        }
-
-        private List<string> RemoveParentesis(string text)
-        {
-            return 
-                text
-                .Split(',')
-                .Select(x => x.Trim('(', ')'))
-                .ToList();
         }
 
         public override int GetHashCode()

@@ -67,9 +67,9 @@ namespace Banco.View
             {
                 ValidaCampos();
 
-                var campos = GeraArrayDeCampos(false);
+                var campos = GeraListaDeCampos(false);
 
-                _daoConta.Insere((Conta)new Conta().RecebeContaComPropriedadesDeCampos(campos));
+                _daoConta.Insere(new Conta(campos));
 
                 _clicado = false;
 
@@ -105,9 +105,9 @@ namespace Banco.View
                 {
                     ValidaCampos();
 
-                    var campos = GeraArrayDeCampos(true);
+                    var campos = GeraListaDeCampos(true);
 
-                    _daoConta.Atualiza((Conta)new Conta().RecebeContaComPropriedadesDeCampos(campos), maskedTextBoxCpf.Text != _contaSelecionada.Cpf);
+                    _daoConta.Atualiza(new Conta(campos), maskedTextBoxCpf.Text != _contaSelecionada.Cpf);
 
                     _clicado = false;
 
@@ -148,9 +148,9 @@ namespace Banco.View
                 {
                     ValidaCampos();
 
-                    var campos = GeraArrayDeCampos(true);
+                    var campos = GeraListaDeCampos(true);
 
-                    _daoConta.Deleta((Conta)new Conta().RecebeContaComPropriedadesDeCampos(campos));
+                    _daoConta.Deleta(new Conta(campos));
 
                     _clicado = false;
 
@@ -229,33 +229,22 @@ namespace Banco.View
             PopulaCampos(_contaSelecionada);
         }
 
-        private object[] GeraArrayDeCampos(bool deveGerarId)
+        private List<object> GeraListaDeCampos(bool deveGerarId)
         {
+            List<object> campos = new List<object>();
 
             if (deveGerarId)
             {
-                return new object[]
-            {
-                _contaSelecionada.Id,
-                textBoxNome.Text,
-                maskedTextBoxTelefone.Text,
-                maskedTextBoxCpf.Text,
-                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxSaldo.Text),
-                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxLimite.Text)
-            };
-            }
-            else
-            {
-                return new object[]
-            {
-                textBoxNome.Text,
-                maskedTextBoxTelefone.Text,
-                maskedTextBoxCpf.Text,
-                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxSaldo.Text),
-                Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxLimite.Text)
-            };
+                campos.Add(_contaSelecionada.Id);
             }
 
+            campos.Add(textBoxNome.Text);
+            campos.Add(maskedTextBoxTelefone.Text);
+            campos.Add(maskedTextBoxCpf.Text);
+            campos.Add(Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxSaldo.Text));
+            campos.Add(Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxLimite.Text));
+
+            return campos;
         }
     }
 }

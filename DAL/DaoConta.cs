@@ -3,6 +3,7 @@ using Banco.Exceptions;
 using Banco.Model;
 using Banco.Util;
 using FirebirdSql.Data.FirebirdClient;
+using System.Data;
 
 namespace Banco.DAL
 {
@@ -15,26 +16,22 @@ namespace Banco.DAL
 
         public Conta PesquisaPorCpf(string cpf)
         {
-            var connection = DataBase.AbreConexao();
-
-            var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", connection);
-
-            var reader = command.ExecuteReader();
-
-            if (reader.Read())
+            using (var connection = DataBase.AbreConexao())
             {
-                var values = CriaArrayDePropriedades(reader);
+                var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", connection);
 
-                connection.Close();
+                var reader = command.ExecuteReader();
 
-                var conta = new Conta();
-                return (Conta)conta.RecebeContaComPropriedadesDeCampos(values);
-            }
-            else
-            {
-                connection.Close();
+                if (reader.Read())
+                {
+                    var values = CriaListaDePropriedades(reader);
 
-                throw new PesquisaSemSucessoException();
+                    return new Conta(values);
+                }
+                else
+                {
+                    throw new PesquisaSemSucessoException();
+                }
             }
         }
 

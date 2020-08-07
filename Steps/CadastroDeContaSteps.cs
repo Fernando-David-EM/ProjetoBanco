@@ -37,15 +37,13 @@ namespace Banco.Steps
         [Given(@"que preencho todos os campos corretamente")]
         public void DadoQuePreenchoTodosOsCamposCorretamente()
         {
-            _contaAtual = 
-                new Conta
-                (
-                    "Fernando",
-                    "30874856",
-                    _cpfValido,
-                    500.0,
-                    1000.0
-                );
+            _contaAtual = new Conta();
+
+            _contaAtual.Nome = "Fernando";
+            _contaAtual.Telefone = "30874856";
+            _contaAtual.Cpf = _cpfValido;
+            _contaAtual.Saldo = 500.0;
+            _contaAtual.Limite = 1000.0;
         }
 
         [Then(@"uma nova conta deve ser cadastrada ao cadastrar")]
@@ -77,15 +75,13 @@ namespace Banco.Steps
         [Given(@"que já existe uma conta com o cpf ""(.*)""")]
         public void DadoQueJaExisteUmaContaComOCpf(string p0)
         {
-            var conta =
-                new Conta
-                (
-                    "Fernando",
-                    "30874856",
-                    p0,
-                    500.0,
-                    1000.0
-                );
+            var conta = new Conta();
+
+            conta.Nome = "Fernando";
+            conta.Telefone = "30874856";
+            conta.Cpf = p0;
+            conta.Saldo = 500.0;
+            conta.Limite = 1000.0;
 
             _daoConta.Insere(conta);
 
@@ -97,15 +93,13 @@ namespace Banco.Steps
         [Given(@"preenchi o resto dos campos corretamente com o cpf ""(.*)""")]
         public void DadoPreenchiORestoDosCamposCorretamente(string p0)
         {
-            _contaAtual =
-                new Conta
-                (
-                    "Fernando",
-                    "30874856",
-                    p0,
-                    500.0,
-                    1000.0
-                );
+            _contaAtual = new Conta();
+
+            _contaAtual.Nome = "Fernando";
+            _contaAtual.Telefone = "30874856";
+            _contaAtual.Cpf = p0;
+            _contaAtual.Saldo = 500.0;
+            _contaAtual.Limite = 1000.0;
         }
 
         [Then(@"devo ver um erro de cpf existente ""(.*)"" ao cadastrar")]
@@ -118,15 +112,13 @@ namespace Banco.Steps
         [Given(@"que preencho os campos corretamente e o cpf com ""(.*)""")]
         public void DadoQuePreenchoOCampoCpfCom(string p0)
         {
-            _contaAtual =
-                new Conta
-                (
-                    "Fernando",
-                    "30874856",
-                    p0,
-                    500.0,
-                    1000.0
-                );
+            _contaAtual = new Conta();
+
+            _contaAtual.Nome = "Fernando";
+            _contaAtual.Telefone = "30874856";
+            _contaAtual.Cpf = p0;
+            _contaAtual.Saldo = 500.0;
+            _contaAtual.Limite = 1000.0;
         }
 
         [Then(@"devo ver um erro de cpf invalido ""(.*)"" ao cadastrar")]
