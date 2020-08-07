@@ -27,8 +27,8 @@ namespace Banco.View
         {
             InitializeComponent();
             _daoConta = new DaoConta();
+
             PopulaTable();
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             CriaMascaras();
         }
@@ -44,7 +44,6 @@ namespace Banco.View
         private void PopulaTable()
         {
             dataGridView1.Rows.Clear();
-
             var contas = _daoConta.PesquisaTodos();
 
             if (contas.Count() > 0)
@@ -161,10 +160,14 @@ namespace Banco.View
 
         private void ValidaCampos()
         {
-            var campos = GeraDicionarioDeCampos();
-
+            VerificaCamposVazios();
             VerificaCpf();
-            VerificaTamanhoTelefone();
+            VerificaTelefone();
+        }
+
+        private void VerificaCamposVazios()
+        {
+            var campos = GeraDicionarioDeCampos();
 
             foreach (var campo in campos)
             {
@@ -175,7 +178,7 @@ namespace Banco.View
             }
         }
 
-        private void VerificaTamanhoTelefone()
+        private void VerificaTelefone()
         {
             if (maskedTextBoxTelefone.Text.Length < 14)
             {
@@ -214,27 +217,23 @@ namespace Banco.View
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int selectedRowCount =
-               dataGridView1.SelectedRows.Count;
-            if (selectedRowCount > 0)
+            if (dataGridView1.SelectedRows.Count == 1)
             {
-                if (selectedRowCount == 1)
-                {
-                    var row = dataGridView1.SelectedRows[0];
-                    var cell = row.Cells[2];
-                    var cpf = cell.Value.ToString();
+                var cpf = PegaCpfDaTabela();
 
-                    _contaSelecionada = _daoConta.PesquisaPorCpf(cpf);
+                _contaSelecionada = _daoConta.PesquisaPorCpf(cpf);
 
-                    _clicado = true;
-                }
-                else
-                {
-                    MostraErro("Clique em apenas uma linha!");
-                }
+                _clicado = true;
             }
 
             PopulaCampos(_contaSelecionada);
+        }
+
+        private string PegaCpfDaTabela()
+        {
+            var row = dataGridView1.SelectedRows[0];
+            var cell = row.Cells[2];
+            return cell.Value.ToString();
         }
 
         private List<object> GeraListaDeCampos(bool deveGerarId)
