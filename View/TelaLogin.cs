@@ -60,7 +60,6 @@ namespace Banco
                 UsuarioAutenticado = true;
                 Close();
             }
-
         }
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -78,25 +77,15 @@ namespace Banco
                     UsuarioAutenticado = true;
                     Close();
                 }
-
             }
-            catch (CampoNaoPreenchidoException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Erro: Campo {ex.Message} deve ser preenchido!");
-
+                MostraErro(ex.Message);
             }
-            catch (PesquisaSemSucessoException ex)
-            {
-                MessageBox.Show("Erro: Ocorreu algum problema em uma pesquisa no banco!\n" + ex.Message);
-            }
-            catch (SenhaIncorretaException)
-            {
-                MessageBox.Show("Erro: Senha incorreta!");
-            }
-            catch (UsuarioInexistenteException)
-            {
-                MessageBox.Show("Erro: Usuário incorreto!");
-            }
+        }
+        private void MostraErro(string msg)
+        {
+            MessageBox.Show($"Erro: {msg}");
         }
     }
 }
