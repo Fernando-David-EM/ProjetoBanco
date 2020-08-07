@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public FalhaEmDeletarException(string message)
-            : base("Falha no sql de remoção!\nTabela : "" + message)
+            : base("Falha no sql de remoção!\nTabela : " + message)
         {
         }
 

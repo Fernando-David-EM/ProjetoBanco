@@ -13,7 +13,7 @@ namespace Banco.Exceptions
         }
 
         public FalhaEmInserirException(string message)
-            : base("Falha no sql de inserção!\nTabela : "" + message)
+            : base("Falha no sql de inserção!\nTabela : " + message)
         {
         }
 
