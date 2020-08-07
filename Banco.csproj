@@ -152,9 +152,7 @@
     <Compile Include="Exceptions\CampoNaoPreenchidoException.cs" />
     <Compile Include="Exceptions\CpfExistenteException.cs" />
     <Compile Include="Exceptions\CpfInvalidoException.cs" />
-    <Compile Include="Exceptions\FalhaEmAtualizarException.cs" />
     <Compile Include="Exceptions\FalhaEmDeletarException.cs" />
-    <Compile Include="Exceptions\FalhaEmInserirException.cs" />
     <Compile Include="Exceptions\PesquisaSemSucessoException.cs" />
     <Compile Include="Exceptions\SenhaIncorretaException.cs" />
     <Compile Include="Exceptions\TelefoneInvalidoException.cs" />

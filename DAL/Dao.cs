@@ -29,12 +29,7 @@ namespace Banco.DAL
 
             using var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
 
-            var resultado = command.ExecuteNonQuery();
-
-            if (resultado == 0)
-            {
-                throw new FalhaEmInserirException("_nomeTabela");
-            }
+            command.ExecuteNonQuery();
         }
 
         public virtual void Atualiza(T item)
@@ -45,13 +40,7 @@ namespace Banco.DAL
 
             using var command = new FbCommand($"update {_nomeTabela} set {item.RecebeColunasIgualValorParaSql()} where id = {item.Id}", connection);
 
-            var resultado = command.ExecuteNonQuery();
-
-            if (resultado == 0)
-            {
-                throw new FalhaEmAtualizarException("_nomeTabela");
-            }
-
+            command.ExecuteNonQuery();
         }
 
         public void Deleta(T item)
@@ -62,19 +51,14 @@ namespace Banco.DAL
             }
             catch (PesquisaSemSucessoException)
             {
-                throw new FalhaEmDeletarException("_nomeTabela");
+                throw new FalhaEmDeletarException("Item inexistente, portanto impossível deletar!");
             }
 
             using var connection = DataBase.AbreConexao();
 
             using var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
 
-            var resultado = command.ExecuteNonQuery();
-
-            if (resultado == 0)
-            {
-                throw new FalhaEmDeletarException("_nomeTabela");
-            }
+            command.ExecuteNonQuery();
 
         }
 
@@ -114,7 +98,7 @@ namespace Banco.DAL
             }
             else
             {
-                throw new PesquisaSemSucessoException("_nomeTabela");
+                throw new PesquisaSemSucessoException(_nomeTabela);
             }
         }
 
@@ -140,7 +124,6 @@ namespace Banco.DAL
             }
             catch (PesquisaSemSucessoException)
             {
-
             }
         }
 

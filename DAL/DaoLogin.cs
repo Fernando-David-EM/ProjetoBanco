@@ -32,7 +32,7 @@ namespace Banco.DAL
             }
             else
             {
-                throw new PesquisaSemSucessoException();
+                throw new PesquisaSemSucessoException(_nomeTabela);
             }
 
         }
