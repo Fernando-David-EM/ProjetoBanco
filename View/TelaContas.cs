@@ -30,6 +30,11 @@ namespace Banco.View
             PopulaTable();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+            CriaMascaras();
+        }
+
+        private void CriaMascaras()
+        {
             maskedTextBoxTelefone.Mask = "(00) 00000-0000";
             maskedTextBoxCpf.Mask = "000,000,000-00";
             maskedTextBoxSaldo.Mask = "$ 999999";
@@ -98,7 +103,7 @@ namespace Banco.View
             }
             catch (Exception ex)
             {
-                MostraErro(ex.Message, ex.StackTrace);
+                MostraErro(ex.Message);
             }
         }
 
@@ -120,7 +125,7 @@ namespace Banco.View
                 }
                 catch (Exception ex)
                 {
-                    MostraErro(ex.Message, ex.StackTrace);
+                    MostraErro(ex.Message);
                 }
             }
             else
@@ -147,7 +152,7 @@ namespace Banco.View
                 }
                 catch (Exception ex)
                 {
-                    MostraErro(ex.Message, ex.StackTrace);
+                    MostraErro(ex.Message);
                 }
             }
             else
@@ -158,31 +163,42 @@ namespace Banco.View
 
         private void ValidaCampos()
         {
-            var campos = new string[]
-            {
-                textBoxNome.Text,
-                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxTelefone.Text),
-                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxCpf.Text),
-                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxSaldo.Text),
-                Formatacao.RemoveTudoMenosNumeros(maskedTextBoxLimite.Text)
-            };
+            var campos = GeraDicionarioDeCampos();
 
-            var camposForamPreenchidos = campos
-                .All(x => !string.IsNullOrEmpty(x));
+            VerificaTamanhoTelefone();
 
-            if (!camposForamPreenchidos)
+            foreach (var campo in campos)
             {
-                throw new CampoNaoPreenchidoException();
+                if (string.IsNullOrEmpty(campo.Value))
+                {
+                    throw new CampoNaoPreenchidoException(campo.Key);
+                }
             }
-            if (campos[1].Length < 11 || !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
+        }
+
+        private void VerificaTamanhoTelefone()
+        {
+            if (maskedTextBoxTelefone.Text.Length < 14 || !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
             {
                 throw new CampoNaoPreenchidoException("Celular");
             }
         }
 
-        private void MostraErro(string msg, string ex)
+        private Dictionary<string, string> GeraDicionarioDeCampos()
         {
-            MessageBox.Show($"Erro: {msg}\n{ex}");
+            return new Dictionary<string, string>
+            {
+                { "Nome", textBoxNome.Text },
+                { "Celular", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxTelefone.Text) },
+                { "Cpf", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxCpf.Text) },
+                { "Saldo", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxSaldo.Text) },
+                { "Limite", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxLimite.Text) }
+            };
+        }
+
+        private void MostraErro(string msg)
+        {
+            MessageBox.Show($"Erro: {msg}");
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -203,7 +219,7 @@ namespace Banco.View
                 }
                 else
                 {
-                    MessageBox.Show("Selecione apenas uma linha da tabela para alterar!");
+                    MostraErro("Clique em apenas uma linha!");
                 }
             }
 
