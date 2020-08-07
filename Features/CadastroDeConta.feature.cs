@@ -196,13 +196,13 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 20
- testRunner.Given("que já existe uma conta com o cpf \"42706252014\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+ testRunner.Given("que já existe uma conta com o cpf \"427.062.520-14\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 21
- testRunner.And("preenchi o resto dos campos corretamente com o cpf \"42706252014\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+ testRunner.And("preenchi o resto dos campos corretamente com o cpf \"427.062.520-14\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 22
- testRunner.Then("devo ver um erro de cpf existente \"42706252014\" ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de cpf existente \"427.062.520-14\" ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -239,10 +239,10 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 25
- testRunner.Given("que preencho os campos corretamente e o cpf com \"11111111111\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+ testRunner.Given("que preencho os campos corretamente e o cpf com \"111.111.111-11\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 26
- testRunner.Then("devo ver um erro de cpf invalido \"11111111111\" ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("devo ver um erro de cpf invalido ao cadastrar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -15,8 +15,16 @@ namespace Banco.Steps
     class LoginSteps
     {
         private DaoLogin _daoLogin = new DaoLogin();
+        private TelaLogin _telaLogin;
         private string _loginUsado;
         private string _senhaUsada;
+
+        [Given(@"que estou com a tela aberta")]
+        public void DadoQueEstouComATelaAberta()
+        {
+            _telaLogin = new TelaLogin();
+            _telaLogin.Show();
+        }
 
         [Given(@"que existe uma conta com login ""(.*)"" e senha ""(.*)""")]
         public void DadoQueExisteUmaContaComLoginESenha(string login, string senha)
@@ -30,25 +38,27 @@ namespace Banco.Steps
         [Given(@"preencho os campos corretamente e clico em login")]
         public void DadoPreenchoOsCamposCorretamenteEClicoEmLogin()
         {
-            //TODO tela
+            Assert.DoesNotThrow(() => _telaLogin.TestCampos(_loginUsado, _senhaUsada));
         }
 
         [Then(@"devo entrar com sucesso no sistema")]
         public void EntaoDevoEntrarComSucessoNoSistema()
         {
-            Assert.DoesNotThrow(() => _daoLogin.Logar(_loginUsado, _senhaUsada)); //redundante?
+            Assert.DoesNotThrow(() => _telaLogin.TestLogin());
         }
 
         [Given(@"que não preencho algum campo")]
         public void DadoQueNaoPreenchoAlgumCampo()
         {
-            //TODO tela
+            _senhaUsada = "";
         }
 
         [Then(@"devo ver um erro de campos nao preenchidos ao logar")]
         public void EntaoDevoVerUmErroDeCampos()
         {
-            //TODO tela
+            _telaLogin.TestCampos(_loginUsado, _senhaUsada);
+
+            Assert.Throws<CampoNaoPreenchidoException>(() => _telaLogin.TestLogin());
         }
 
         [Given(@"que preencho o campo do login e senha com ""(.*)"" e ""(.*)""")]
@@ -56,12 +66,14 @@ namespace Banco.Steps
         {
             _loginUsado = login;
             _senhaUsada = senha;
+
+            _telaLogin.TestCampos(_loginUsado, _senhaUsada);
         }
 
         [Then(@"devo ver um erro de usuario inexistente ao logar")]
         public void EntaoDevoVerUmErroDeConta()
         {
-            Assert.Throws<UsuarioInexistenteException>(() => _daoLogin.Logar(_loginUsado, _senhaUsada));
+            Assert.Throws<UsuarioInexistenteException>(() => _telaLogin.TestLogin());
         }
 
         [Given(@"que coloco o login como ""(.*)""")]
@@ -74,12 +86,14 @@ namespace Banco.Steps
         public void DadoColocoASenha(string senha)
         {
             _senhaUsada = senha;
+
+            _telaLogin.TestCampos(_loginUsado, _senhaUsada);
         }
 
         [Then(@"devo ver um erro de senha invalida ao logar")]
         public void EntaoDevoVerUmErroDeSenha()
         {
-            Assert.Throws<SenhaIncorretaException>(() => _daoLogin.Logar(_loginUsado, _senhaUsada));
+            Assert.Throws<SenhaIncorretaException>(() => _telaLogin.TestLogin());
         }
 
     }

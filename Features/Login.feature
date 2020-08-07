@@ -4,6 +4,9 @@ Funcionalidade: Login
 Dado que tenho uma conta de administrador
 Logo no sistema e tenho acesso às funcionalidades
 
+Contexto: 
+	Dado que estou com a tela aberta
+
 Cenario: Sucesso
 	Dado que existe uma conta com login "admin" e senha "admin"
 	E preencho os campos corretamente e clico em login

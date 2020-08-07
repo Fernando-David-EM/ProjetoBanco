@@ -17,10 +17,10 @@ Cenario: Erro falta de campos
 	Então devo ver um erro de preenchimento de campos ao cadastrar
 
 Cenario: Erro cpf já cadastrado
-	Dado que já existe uma conta com o cpf "42706252014"
-	E preenchi o resto dos campos corretamente com o cpf "42706252014"
-	Então devo ver um erro de cpf existente "42706252014" ao cadastrar
+	Dado que já existe uma conta com o cpf "427.062.520-14"
+	E preenchi o resto dos campos corretamente com o cpf "427.062.520-14"
+	Então devo ver um erro de cpf existente "427.062.520-14" ao cadastrar
 
 Cenario: Erro cpf inválido
-	Dado que preencho os campos corretamente e o cpf com "11111111111"
-	Então devo ver um erro de cpf invalido "11111111111" ao cadastrar
+	Dado que preencho os campos corretamente e o cpf com "111.111.111-11"
+	Então devo ver um erro de cpf invalido ao cadastrar

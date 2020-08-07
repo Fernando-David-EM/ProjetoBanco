@@ -2,6 +2,8 @@
 using Banco.Data;
 using Banco.Exceptions;
 using Banco.Model;
+using Banco.Util;
+using Banco.View;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,40 +18,52 @@ namespace Banco.Steps
     class CadastroDeContaSteps
     {
         private DaoConta _daoConta;
-        private DaoLogin _daoLogin;
+        private TelaContas _telaContas;
+        private TelaLogin _telaLogin;
         private Conta _contaAtual;
-        private string _cpfValido = "11739736052";
+        private string _cpfValido;
 
         [Given(@"que estou logado como um administrador")]
         public void DadoQueEstouLogadoComoUmAdministrador()
         {
-            _daoLogin = new DaoLogin();
+            _telaLogin = new TelaLogin();
+            _telaLogin.Show();
 
-            Assert.DoesNotThrow(() => _daoLogin.Logar("admin", "admin"));
+            _cpfValido = ValidaCPF.GerarCpf();
+
+            _telaLogin.TestCampos("admin", "admin");
+
+            Assert.DoesNotThrow(() => _telaLogin.TestLogin());
         }
 
         [Given(@"clico no botao de cadastro de conta")]
         public void DadoClicoNoBotaoDeCadastroDeConta()
         {
             _daoConta = new DaoConta();
+
+            _telaContas = new TelaContas();
+            _telaContas.Show();
         }
 
         [Given(@"que preencho todos os campos corretamente")]
         public void DadoQuePreenchoTodosOsCamposCorretamente()
         {
-            _contaAtual = new Conta();
+            _contaAtual = new Conta
+            {
+                Nome = "Fernando",
+                Telefone = "(62) 99854-0164",
+                Cpf = _cpfValido,
+                Saldo = 0,
+                Limite = 0
+            };
 
-            _contaAtual.Nome = "Fernando";
-            _contaAtual.Telefone = "30874856";
-            _contaAtual.Cpf = _cpfValido;
-            _contaAtual.Saldo = 500.0;
-            _contaAtual.Limite = 1000.0;
+            _telaContas.TesteCampos(_contaAtual.RecebePropriedades());
         }
 
         [Then(@"uma nova conta deve ser cadastrada ao cadastrar")]
         public void EntaoUmaNovaContaDeveSerCadastrada()
         {
-            _daoConta.Insere(_contaAtual);
+            Assert.DoesNotThrow(() => _telaContas.TesteCadastrar());
 
             var pesquisaConta = _daoConta.PesquisaPorCpf(_cpfValido);
 
@@ -61,71 +75,94 @@ namespace Banco.Steps
         [Given(@"que deixo de preencher algum campo")]
         public void DadoQueDeixoDePreencherAlgumCampo()
         {
-            //Não sei testar
+            _contaAtual = new Conta
+            {
+                Nome = "Fernando",
+                Telefone = "(62) 99854-0164",
+                Cpf = _cpfValido,
+                Saldo = 0,
+                Limite = 0
+            };
+
+            var campos = _contaAtual.RecebePropriedades();
+            campos[0] = "";
+
+            _telaContas.TesteCampos(campos);
         }
 
         [Then(@"devo ver um erro de preenchimento de campos ao cadastrar")]
         public void EntaoDevoVerUmErroDePreenchimentoDeCampos()
         {
-            //Também não sei testar
-
-            Assert.Throws<CampoNaoPreenchidoException>(() => throw new CampoNaoPreenchidoException());
+            Assert.Throws<CampoNaoPreenchidoException>(() => _telaContas.TesteCadastrar());
         }
 
         [Given(@"que já existe uma conta com o cpf ""(.*)""")]
         public void DadoQueJaExisteUmaContaComOCpf(string p0)
         {
-            var conta = new Conta();
+            var conta = new Conta
+            {
+                Nome = "Fernando",
+                Telefone = "(62) 99854-0164",
+                Cpf = p0,
+                Saldo = 0,
+                Limite = 0
+            };
 
-            conta.Nome = "Fernando";
-            conta.Telefone = "30874856";
-            conta.Cpf = p0;
-            conta.Saldo = 500.0;
-            conta.Limite = 1000.0;
+            _telaContas.TesteCampos(conta.RecebePropriedades());
 
-            _daoConta.Insere(conta);
+            try
+            {
+                _daoConta.PesquisaPorCpf(p0);
+            }
+            catch (PesquisaSemSucessoException)
+            {
 
-            var pesquisaConta = _daoConta.PesquisaPorCpf(p0);
+                _daoConta.Insere(conta);
+            }
 
-            Assert.AreEqual(p0, pesquisaConta.Cpf);
+            Assert.Throws<CpfExistenteException>(() => _telaContas.TesteCadastrar());
         }
 
         [Given(@"preenchi o resto dos campos corretamente com o cpf ""(.*)""")]
         public void DadoPreenchiORestoDosCamposCorretamente(string p0)
         {
-            _contaAtual = new Conta();
+            _contaAtual = new Conta
+            {
+                Nome = "Fernando",
+                Telefone = "(62) 99854-0164",
+                Cpf = p0,
+                Saldo = 0,
+                Limite = 0
+            };
 
-            _contaAtual.Nome = "Fernando";
-            _contaAtual.Telefone = "30874856";
-            _contaAtual.Cpf = p0;
-            _contaAtual.Saldo = 500.0;
-            _contaAtual.Limite = 1000.0;
+            _telaContas.TesteCampos(_contaAtual.RecebePropriedades());
         }
 
         [Then(@"devo ver um erro de cpf existente ""(.*)"" ao cadastrar")]
         public void EntaoDevoVerUmErroDeCpfExistente(string p0)
         {
-            var ex = Assert.Throws<CpfExistenteException>(() => _daoConta.Insere(_contaAtual));
-            Assert.That(ex.Message, Is.EqualTo(p0));
+            Assert.Throws<CpfExistenteException>(() => _telaContas.TesteCadastrar());
         }
 
         [Given(@"que preencho os campos corretamente e o cpf com ""(.*)""")]
         public void DadoQuePreenchoOCampoCpfCom(string p0)
         {
-            _contaAtual = new Conta();
+            _contaAtual = new Conta
+            {
+                Nome = "Fernando",
+                Telefone = "(62) 99854-0164",
+                Cpf = p0,
+                Saldo = 0,
+                Limite = 0
+            };
 
-            _contaAtual.Nome = "Fernando";
-            _contaAtual.Telefone = "30874856";
-            _contaAtual.Cpf = p0;
-            _contaAtual.Saldo = 500.0;
-            _contaAtual.Limite = 1000.0;
+            _telaContas.TesteCampos(_contaAtual.RecebePropriedades());
         }
 
-        [Then(@"devo ver um erro de cpf invalido ""(.*)"" ao cadastrar")]
-        public void EntaoDevoVerUmErroDeCpfInvalido(string p0)
+        [Then(@"devo ver um erro de cpf invalido ao cadastrar")]
+        public void EntaoDevoVerUmErroDeCpfInvalido()
         {
-            var ex = Assert.Throws<CpfInvalidoException>(() => _daoConta.Insere(_contaAtual));
-            Assert.That(ex.Message, Is.EqualTo(p0));
+            Assert.Throws<CpfInvalidoException>(() => _telaContas.TesteCadastrar());
         }
 
     }

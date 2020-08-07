@@ -60,9 +60,30 @@ namespace Banco.View
             maskedTextBoxLimite.Text = conta.Limite.ToString();
         }
 
+        public void TesteCampos(string[] campos)
+        {
+            textBoxNome.Text = campos[0];
+            maskedTextBoxTelefone.Text = campos[1];
+            maskedTextBoxCpf.Text = campos[2];
+            maskedTextBoxSaldo.Text = campos[3];
+            maskedTextBoxLimite.Text = campos[4];
+        }
+
+        public void TesteCadastrar()
+        {
+            ValidaCampos();
+
+            var campos = GeraListaDeCampos(false);
+
+            _daoConta.Insere(new Conta(campos));
+
+            _clicado = false;
+
+            PopulaTable();
+        }
+
         private void buttonCadastrar_Click(object sender, EventArgs e)
         {
-
             try
             {
                 ValidaCampos();

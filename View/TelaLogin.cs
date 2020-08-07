@@ -40,6 +40,28 @@ namespace Banco
             }
         }
 
+        public void TestCampos(string usuario, string senha)
+        {
+            textBoxUsuario.Text = usuario;
+            maskedTextBoxSenha.Text = senha;
+        }
+
+        public void TestLogin()
+        {
+            ValidaCampos();
+
+            string usuario = textBoxUsuario.Text;
+            string senha = maskedTextBoxSenha.Text;
+
+            var usuarioLogado = _daoLogin.Logar(usuario, senha);
+
+            if (usuarioLogado != null)
+            {
+                UsuarioAutenticado = true;
+                Close();
+            }
+
+        }
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             try
