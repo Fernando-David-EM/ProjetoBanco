@@ -22,16 +22,37 @@ namespace Banco.Model
 
         public int Id { get; set; }
 
+        public string RecebeColunasIgualValorParaSql()
+        {
+            var colunas = RemoveParenteses(RecebeNomeDasColunasDaTabelaParaSql());
+
+            var valores = RemoveParenteses(RecebeValorDasPropriedadesParaSql());
+
+            return AdicionaVirgulasEntreColunasEValores(colunas, valores);
+        }
         public abstract string RecebeNomeDasColunasDaTabelaParaSql();
 
         public abstract string RecebeValorDasPropriedadesParaSql();
 
-        public abstract string RecebeColunasIgualValorParaSql();
+        protected string AdicionaVirgulasEntreColunasEValores(List<string> colunas, List<string> valores)
+        {
+            string final = "";
+
+            for (int i = 0; i < colunas.Count; i++)
+            {
+                final += $"{colunas[i]}={valores[i]},";
+            }
+
+            final = final.Trim(',');
+
+            return final;
+        }
 
         public abstract string RecebePropriedadeDeValidacao();
 
         public abstract string[] RecebePropriedades();
-        protected List<string> RemoveParentesis(string text)
+
+        protected List<string> RemoveParenteses(string text)
         {
             return
                 text

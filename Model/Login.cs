@@ -32,24 +32,6 @@ namespace Banco.Model
             Senha = Convert.ToString(propriedades[1]);
         }
 
-        public override string RecebeColunasIgualValorParaSql()
-        {
-            var names = RemoveParentesis(RecebeNomeDasColunasDaTabelaParaSql());
-
-            var values = RemoveParentesis(RecebeValorDasPropriedadesParaSql());
-
-            string final = "(";
-
-            for (int i = 0; i < names.Count; i++)
-            {
-                final += $"{names[i]}={values[i]}";
-            }
-
-            final += ")";
-
-            return final;
-        }
-
         public override string RecebeNomeDasColunasDaTabelaParaSql()
         {
             return "(log_usuario,log_senha)";

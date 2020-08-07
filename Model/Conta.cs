@@ -61,24 +61,6 @@ namespace Banco.Model
             return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',{Saldo},{Limite})";
         }
 
-        public override string RecebeColunasIgualValorParaSql()
-        {
-            var names = RemoveParentesis(RecebeNomeDasColunasDaTabelaParaSql());
-
-            var values = RemoveParentesis(RecebeValorDasPropriedadesParaSql());
-
-            string final = "";
-
-            for (int i = 0; i < names.Count; i++)
-            {
-                final += $"{names[i]}={values[i]},";
-            }
-
-            final = final.Trim(',');
-
-            return final;
-        }
-
         public override string RecebePropriedadeDeValidacao()
         {
             return Cpf;

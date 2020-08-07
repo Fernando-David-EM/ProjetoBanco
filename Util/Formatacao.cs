@@ -12,7 +12,7 @@ namespace Banco.Util
     {
         public static string TransformaDinheiroEmReais(double numero)
         {
-            return numero.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR")); //Type conversion
+            return numero.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
         }
 
         public static double RemoveSimboloDeDinheiro(string numero)
