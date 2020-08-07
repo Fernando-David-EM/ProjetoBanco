@@ -48,12 +48,12 @@ namespace Banco.View
             this.buttonCadastrar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.daoContaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Limite = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CPF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Telefone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Telefone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CPF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Limite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.daoContaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -237,33 +237,13 @@ namespace Banco.View
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // daoContaBindingSource
+            // Nome
             // 
-            this.daoContaBindingSource.DataSource = typeof(Banco.DAL.DaoConta);
-            // 
-            // Limite
-            // 
-            this.Limite.Frozen = true;
-            this.Limite.HeaderText = "Limite";
-            this.Limite.Name = "Limite";
-            this.Limite.ReadOnly = true;
-            this.Limite.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Saldo
-            // 
-            this.Saldo.Frozen = true;
-            this.Saldo.HeaderText = "Saldo";
-            this.Saldo.Name = "Saldo";
-            this.Saldo.ReadOnly = true;
-            this.Saldo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // CPF
-            // 
-            this.CPF.Frozen = true;
-            this.CPF.HeaderText = "CPF";
-            this.CPF.Name = "CPF";
-            this.CPF.ReadOnly = true;
-            this.CPF.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Nome.Frozen = true;
+            this.Nome.HeaderText = "Nome";
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            this.Nome.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // Telefone
             // 
@@ -273,13 +253,33 @@ namespace Banco.View
             this.Telefone.ReadOnly = true;
             this.Telefone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // Nome
+            // CPF
             // 
-            this.Nome.Frozen = true;
-            this.Nome.HeaderText = "Nome";
-            this.Nome.Name = "Nome";
-            this.Nome.ReadOnly = true;
-            this.Nome.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CPF.Frozen = true;
+            this.CPF.HeaderText = "CPF";
+            this.CPF.Name = "CPF";
+            this.CPF.ReadOnly = true;
+            this.CPF.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Saldo
+            // 
+            this.Saldo.Frozen = true;
+            this.Saldo.HeaderText = "Saldo";
+            this.Saldo.Name = "Saldo";
+            this.Saldo.ReadOnly = true;
+            this.Saldo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Limite
+            // 
+            this.Limite.Frozen = true;
+            this.Limite.HeaderText = "Limite";
+            this.Limite.Name = "Limite";
+            this.Limite.ReadOnly = true;
+            this.Limite.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // daoContaBindingSource
+            // 
+            this.daoContaBindingSource.DataSource = typeof(Banco.DAL.DaoConta);
             // 
             // TelaContas
             // 

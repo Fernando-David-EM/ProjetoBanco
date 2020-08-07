@@ -78,7 +78,6 @@ C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.pdb
 C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.xml
 C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\TechTalk.SpecFlow.NUnit.SpecFlowPlugin.pdb
 C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\Utf8Json.xml
-C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csprojAssemblyReference.cache
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.exe.config
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.Properties.Resources.resources
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csproj.GenerateResource.cache
@@ -88,3 +87,10 @@ C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.exe
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.pdb
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.TelaLogin.resources
 C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.View.TelaContas.resources
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Buffers.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Memory.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Buffers.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Memory.xml
+C:\Users\Escolar Manager\source\repos\Banco\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Escolar Manager\source\repos\Banco\obj\Debug\Banco.csprojAssemblyReference.cache

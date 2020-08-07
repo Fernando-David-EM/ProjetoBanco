@@ -18,24 +18,23 @@ namespace Banco.DAL
 
         public Login PesquisaPorUsuario(string usuario)
         {
-            using (var connection = DataBase.AbreConexao())
+            using var connection = DataBase.AbreConexao();
+
+            using var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", connection);
+
+            var reader = command.ExecuteReader();
+
+            if (reader.Read())
             {
+                var values = CriaListaDePropriedades(reader);
 
-                var command = new FbCommand($"select * from {_nomeTabela} where log_usuario = \'{usuario}\'", connection);
-
-                var reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    var values = CriaListaDePropriedades(reader);
-
-                    return new Login(values);
-                }
-                else
-                {
-                    throw new PesquisaSemSucessoException();
-                }
+                return new Login(values);
             }
+            else
+            {
+                throw new PesquisaSemSucessoException();
+            }
+
         }
 
         public Login Logar(string usuario, string senha)
@@ -59,7 +58,7 @@ namespace Banco.DAL
                 throw new UsuarioInexistenteException();
             }
 
-            
+
         }
 
         protected override void ValidaCondicaoDeInsercao(string validacao)

@@ -23,36 +23,35 @@ namespace Banco.DAL
 
         public virtual void Insere(T item)
         {
-            using (var connection = DataBase.AbreConexao()) 
+            using var connection = DataBase.AbreConexao();
+
+            ValidaCondicaoDeInsercao(item.RecebePropriedadeDeValidacao());
+
+            using var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
+
+            var resultado = command.ExecuteNonQuery();
+
+            if (resultado == 0)
             {
-                ValidaCondicaoDeInsercao(item.RecebePropriedadeDeValidacao());
-
-                var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
-
-                var resultado = command.ExecuteNonQuery();
-
-                if (resultado == 0)
-                {
-                    throw new FalhaEmInserirException();
-                }
+                throw new FalhaEmInserirException();
             }
         }
 
         public virtual void Atualiza(T item, bool mudouPropriedadeDeValidacao)
         {
-            using (var connection = DataBase.AbreConexao())
+            using var connection = DataBase.AbreConexao();
+
+            ValidaCondicaoAtualizacao(item.RecebePropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
+
+            using var command = new FbCommand($"update {_nomeTabela} set {item.RecebeColunasIgualValorParaSql()} where id = {item.Id}", connection);
+
+            var resultado = command.ExecuteNonQuery();
+
+            if (resultado == 0)
             {
-                ValidaCondicaoAtualizacao(item.RecebePropriedadeDeValidacao(), mudouPropriedadeDeValidacao);
-
-                var command = new FbCommand($"update {_nomeTabela} set {item.RecebeColunasIgualValorParaSql()} where id = {item.Id}", connection);
-
-                var resultado = command.ExecuteNonQuery();
-
-                if (resultado == 0)
-                {
-                    throw new FalhaEmAtualizarException();
-                }
+                throw new FalhaEmAtualizarException();
             }
+
         }
 
         public void Deleta(T item)
@@ -66,48 +65,48 @@ namespace Banco.DAL
                 throw new FalhaEmDeletarException("Erro em deletar : item inexistente!", ex);
             }
 
-            using (var connection = DataBase.AbreConexao())
+            using var connection = DataBase.AbreConexao();
+
+            using var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
+
+            var resultado = command.ExecuteNonQuery();
+
+            if (resultado == 0)
             {
-                var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
-
-                var resultado = command.ExecuteNonQuery();
-
-                if (resultado == 0)
-                {
-                    throw new FalhaEmDeletarException("Erro em deletar : erro no sql!");
-                }
+                throw new FalhaEmDeletarException("Erro em deletar : erro no sql!");
             }
+
         }
 
         public IEnumerable<T> PesquisaTodos()
         {
-            using (var connection = DataBase.AbreConexao())
-            {
-                var command = new FbCommand($"select * from {_nomeTabela}", connection);
+            using var connection = DataBase.AbreConexao();
 
-                return Pesquisa(command);
-            }
+            using var command = new FbCommand($"select * from {_nomeTabela} order by id asc", connection);
+
+            return Pesquisa(command);
+
         }
 
         public T PesquisaPorId(int id)
         {
-            using (var connection = DataBase.AbreConexao())
+            using var connection = DataBase.AbreConexao();
+
+            using var command = new FbCommand($"select * from {_nomeTabela} where id = {id}", connection);
+
+            var reader = command.ExecuteReader();
+
+            if (reader.Read())
             {
-                var command = new FbCommand($"select * from {_nomeTabela} where id = {id}", connection);
+                var values = CriaListaDePropriedades(reader);
 
-                var reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    var values = CriaListaDePropriedades(reader);
-
-                    return (T)Activator.CreateInstance(typeof(T), values);
-                }
-                else
-                {
-                    throw new PesquisaSemSucessoException();
-                }
+                return (T)Activator.CreateInstance(typeof(T), values);
             }
+            else
+            {
+                throw new PesquisaSemSucessoException();
+            }
+
         }
 
         protected IEnumerable<T> Pesquisa(FbCommand command)

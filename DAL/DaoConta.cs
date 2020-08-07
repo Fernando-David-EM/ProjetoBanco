@@ -11,28 +11,28 @@ namespace Banco.DAL
     {
         public DaoConta() : base("contas")
         {
-            
+
         }
 
         public Conta PesquisaPorCpf(string cpf)
         {
-            using (var connection = DataBase.AbreConexao())
+            using var connection = DataBase.AbreConexao();
+
+            using var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", connection);
+
+            var reader = command.ExecuteReader();
+
+            if (reader.Read())
             {
-                var command = new FbCommand($"select * from {_nomeTabela} where con_cpf = \'{cpf}\'", connection);
+                var values = CriaListaDePropriedades(reader);
 
-                var reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    var values = CriaListaDePropriedades(reader);
-
-                    return new Conta(values);
-                }
-                else
-                {
-                    throw new PesquisaSemSucessoException();
-                }
+                return new Conta(values);
             }
+            else
+            {
+                throw new PesquisaSemSucessoException();
+            }
+
         }
 
         protected override void ValidaCondicaoDeInsercao(string validacao)
@@ -66,7 +66,7 @@ namespace Banco.DAL
                 var conta = PesquisaPorCpf(cpf);
 
                 //Só passa dessa linha se achar um item com aquele cpf
-               if (mudouPropriedadeDeValidacao)
+                if (mudouPropriedadeDeValidacao)
                 {
                     throw new CpfExistenteException(cpf);
                 }
