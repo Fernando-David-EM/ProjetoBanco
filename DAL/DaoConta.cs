@@ -51,7 +51,7 @@ namespace Banco.DAL
                 //Significa que não achou, ou seja, pode continuar a inserção
             }
 
-            if (!ValidaCPF.EhCpf(cpf))
+            if (!CPF.EhCpf(cpf))
             {
                 throw new CpfInvalidoException(cpf);
             }
@@ -76,7 +76,7 @@ namespace Banco.DAL
                 //Significa que não achou, ou seja, pode continuar a inserção
             }
 
-            if (!ValidaCPF.EhCpf(cpf))
+            if (!CPF.EhCpf(cpf))
             {
                 throw new CpfInvalidoException(cpf);
             }

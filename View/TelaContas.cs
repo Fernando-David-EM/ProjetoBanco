@@ -225,7 +225,7 @@ namespace Banco.View
             MessageBox.Show($"Erro: {msg}\n{ex}");
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int selectedRowCount =
                dataGridView1.SelectedRows.Count;

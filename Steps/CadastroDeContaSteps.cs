@@ -29,7 +29,7 @@ namespace Banco.Steps
             _telaLogin = new TelaLogin();
             _telaLogin.Show();
 
-            _cpfValido = ValidaCPF.GerarCpf();
+            _cpfValido = CPF.GeraCpf();
 
             _telaLogin.TestCampos("admin", "admin");
 

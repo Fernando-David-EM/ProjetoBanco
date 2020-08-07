@@ -7,9 +7,9 @@ namespace Banco.Util
     /// <summary>
     /// Realiza a validação do CPF
     /// </summary>
-    public static class ValidaCPF
+    public static class CPF
     {
-        public static string GerarCpf()
+        public static string GeraCpf()
         {
             int soma = 0, resto = 0;
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -27,7 +27,7 @@ namespace Banco.Util
             else
                 resto = 11 - resto;
 
-            semente = semente + resto;
+            semente += resto;
             soma = 0;
 
             for (int i = 0; i < 10; i++)
@@ -40,7 +40,7 @@ namespace Banco.Util
             else
                 resto = 11 - resto;
 
-            semente = semente + resto;
+            semente += resto;
 
             var chars = semente.ToCharArray();
             char[] cpf = new char[14];
