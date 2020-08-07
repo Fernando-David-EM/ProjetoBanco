@@ -26,7 +26,7 @@ namespace Banco.DAL
 
             if (reader.Read())
             {
-                var values = CriaListaDePropriedades(reader);
+                var values = GeraPropriedadesParaConstrutor(reader);
 
                 return new Login(values);
             }
@@ -54,47 +54,17 @@ namespace Banco.DAL
             }
             catch (PesquisaSemSucessoException)
             {
-
                 throw new UsuarioInexistenteException();
             }
-
-
         }
 
-        protected override void ValidaCondicaoDeInsercao(string validacao)
+        protected override void VerificaCondicao(Login item)
         {
-            string usuario = validacao;
+            var login = PesquisaPorUsuario(item.Usuario);
 
-            try
+            if (login.Id != item.Id)
             {
-                var login = PesquisaPorUsuario(usuario);
-
-                //Só passa dessa linha se achar um item com aquele usuario
-                throw new UsuarioExistenteException(usuario);
-            }
-            catch (PesquisaSemSucessoException)
-            {
-                //Significa que não achou, ou seja, pode continuar a inserção
-            }
-        }
-
-        protected override void ValidaCondicaoAtualizacao(string validacao, bool mudouPropriedadeDeValidacao)
-        {
-            string usuario = validacao;
-
-            try
-            {
-                var login = PesquisaPorUsuario(usuario);
-
-                //Só passa dessa linha se achar um item com aquele usuario
-                if (mudouPropriedadeDeValidacao)
-                {
-                    throw new UsuarioExistenteException(usuario);
-                }
-            }
-            catch (PesquisaSemSucessoException)
-            {
-                //Significa que não achou, ou seja, pode continuar a inserção
+                throw new UsuarioExistenteException(item.Usuario);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Banco.DAL
         void Insere(T item);
         void Atualiza(T item, bool mudouPropriedadeDeValidacao);
         void Deleta(T item);
-        IEnumerable<T> PesquisaTodos();
+        List<T> PesquisaTodos();
         T PesquisaPorId(int id);
     }
 }
