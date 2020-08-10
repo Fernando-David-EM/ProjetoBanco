@@ -5,7 +5,7 @@ using System.Diagnostics;
 using global::NUnit.Framework;
 using global::TechTalk.SpecFlow;
 
-[GeneratedCode("SpecFlow", "3.3.57")]
+[GeneratedCode("SpecFlow", "3.3.74")]
 [SetUpFixture]
 public class Banco_NUnitAssemblyHooks
 {

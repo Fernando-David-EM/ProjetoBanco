@@ -8,7 +8,7 @@ namespace Banco.Data
         {
             var conexao = new FbConnection(
                 @"ServerType=0;
-                    database=localhost:C:\Users\Escolar Manager\source\repos\Banco\BANCO.FDB;
+                    database=localhost:E:\Prog\EM\ProjetoBanco\BANCO.FDB;
                     user=SYSDBA;
                     password=@Fernando23");
 

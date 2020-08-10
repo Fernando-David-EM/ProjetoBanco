@@ -2,6 +2,7 @@
 using Banco.Util;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ namespace Banco.Model
 
         public override string RecebeValorDasPropriedadesParaSql()
         {
-            return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',REPLACE(\'{Saldo}\', ',', '.'),REPLACE(\'{Limite}\', ',', '.'))";
+            return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',{Saldo.ToString(CultureInfo.InvariantCulture)},{Limite.ToString(CultureInfo.InvariantCulture)})";
         }
 
         public override string RecebePropriedadeDeValidacao()
