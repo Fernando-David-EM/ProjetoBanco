@@ -29,6 +29,7 @@ namespace Banco.View
         public TelaContas()
         {
             InitializeComponent();
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             _daoConta = new DaoConta();
             PopulaTable();
             CriaMascaras();
