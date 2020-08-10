@@ -59,7 +59,7 @@ namespace Banco.Model
 
         public override string RecebeValorDasPropriedadesParaSql()
         {
-            return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',{Saldo},{Limite})";
+            return $"(\'{Nome}\',\'{Telefone}\',\'{Cpf}\',REPLACE(\'{Saldo}\', ',', '.'),REPLACE(\'{Limite}\', ',', '.'))";
         }
 
         public override string RecebePropriedadeDeValidacao()

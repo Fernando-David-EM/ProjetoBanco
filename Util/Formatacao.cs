@@ -17,7 +17,7 @@ namespace Banco.Util
 
         public static double RemoveSimboloDeDinheiro(string numero)
         {
-            return Convert.ToDouble(Regex.Replace(numero, "[^0-9]", string.Empty));
+            return Convert.ToDouble(numero.Replace("R$ ", "").Replace(".", ","));
         }
         public static string RemoveTudoMenosNumeros(string numero)
         {   

@@ -10,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Configuration;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -37,8 +38,6 @@ namespace Banco.View
         {
             maskedTextBoxTelefone.Mask = "(00) 00000-0000";
             maskedTextBoxCpf.Mask = "000,000,000-00";
-            maskedTextBoxSaldo.Mask = "$ 999999";
-            maskedTextBoxLimite.Mask = "$ 999999";
         }
 
         private void PopulaTable()
@@ -60,8 +59,8 @@ namespace Banco.View
             textBoxNome.Text = conta.Nome;
             maskedTextBoxTelefone.Text = conta.Telefone;
             maskedTextBoxCpf.Text = conta.Cpf;
-            maskedTextBoxSaldo.Text = conta.Saldo.ToString();
-            maskedTextBoxLimite.Text = conta.Limite.ToString();
+            textBoxSaldo.Text = conta.Saldo.ToString();
+            textBoxLimite.Text = conta.Limite.ToString();
         }
 
         public void TesteCampos(string[] campos)
@@ -69,8 +68,8 @@ namespace Banco.View
             textBoxNome.Text = campos[0];
             maskedTextBoxTelefone.Text = campos[1];
             maskedTextBoxCpf.Text = campos[2];
-            maskedTextBoxSaldo.Text = campos[3];
-            maskedTextBoxLimite.Text = campos[4];
+            textBoxSaldo.Text = campos[3];
+            textBoxLimite.Text = campos[4];
         }
 
         public void TesteCadastrar()
@@ -161,6 +160,7 @@ namespace Banco.View
         private void ValidaCampos()
         {
             VerificaCamposVazios();
+            VerificaDinheiro();
             VerificaCpf();
             VerificaTelefone();
         }
@@ -176,6 +176,31 @@ namespace Banco.View
                     throw new CampoNaoPreenchidoException(campo.Key);
                 }
             }
+        }
+
+        private void VerificaDinheiro()
+        {
+            if (TemMaisDeDuasCasasDecimais(textBoxLimite.Text))
+            {
+                throw new CampoNaoPreenchidoException("Limite tem mais de 2 casas decimais");
+            }
+            if (TemMaisDeDuasCasasDecimais(textBoxSaldo.Text))
+            {
+                throw new CampoNaoPreenchidoException("Saldo tem mais de 2 casas decimais");
+            }
+        }
+
+        private bool TemMaisDeDuasCasasDecimais(string campo)
+        {
+            if (campo.Contains("."))
+            {
+                if (campo.ElementAt(campo.Length - 3) != '.')
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void VerificaTelefone()
@@ -220,8 +245,8 @@ namespace Banco.View
                 { "Nome", textBoxNome.Text },
                 { "Celular", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxTelefone.Text) },
                 { "Cpf", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxCpf.Text) },
-                { "Saldo", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxSaldo.Text) },
-                { "Limite", Formatacao.RemoveTudoMenosNumeros(maskedTextBoxLimite.Text) }
+                { "Saldo", Formatacao.RemoveSimboloDeDinheiro(textBoxSaldo.Text).ToString() },
+                { "Limite", Formatacao.RemoveSimboloDeDinheiro(textBoxLimite.Text).ToString() }
             };
         }
 
@@ -239,9 +264,9 @@ namespace Banco.View
                 _contaSelecionadaDaTabela = _daoConta.PesquisaPorCpf(cpf);
 
                 _linhaDaTabelaFoiClicada = true;
-            }
 
-            PopulaCampos(_contaSelecionadaDaTabela);
+                PopulaCampos(_contaSelecionadaDaTabela);
+            }
         }
 
         private string PegaCpfDaTabela()
@@ -263,8 +288,8 @@ namespace Banco.View
             campos.Add(textBoxNome.Text);
             campos.Add(maskedTextBoxTelefone.Text);
             campos.Add(maskedTextBoxCpf.Text);
-            campos.Add(Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxSaldo.Text));
-            campos.Add(Formatacao.RemoveSimboloDeDinheiro(maskedTextBoxLimite.Text));
+            campos.Add(Formatacao.RemoveSimboloDeDinheiro(textBoxSaldo.Text));
+            campos.Add(Formatacao.RemoveSimboloDeDinheiro(textBoxLimite.Text));
 
             return campos;
         }

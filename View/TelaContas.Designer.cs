@@ -1,4 +1,5 @@
 ﻿using Banco.Data;
+using System.Windows.Forms;
 
 namespace Banco.View
 {
@@ -31,17 +32,6 @@ namespace Banco.View
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.maskedTextBoxLimite = new System.Windows.Forms.MaskedTextBox();
-            this.maskedTextBoxSaldo = new System.Windows.Forms.MaskedTextBox();
-            this.maskedTextBoxCpf = new System.Windows.Forms.MaskedTextBox();
-            this.maskedTextBoxTelefone = new System.Windows.Forms.MaskedTextBox();
-            this.textBoxNome = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonRemover = new System.Windows.Forms.Button();
             this.buttonAlterar = new System.Windows.Forms.Button();
@@ -54,116 +44,23 @@ namespace Banco.View
             this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Limite = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.daoContaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.groupBox1.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxNome = new System.Windows.Forms.TextBox();
+            this.maskedTextBoxTelefone = new System.Windows.Forms.MaskedTextBox();
+            this.maskedTextBoxCpf = new System.Windows.Forms.MaskedTextBox();
+            this.textBoxSaldo = new System.Windows.Forms.TextBox();
+            this.textBoxLimite = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.daoContaBindingSource)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.maskedTextBoxLimite);
-            this.groupBox1.Controls.Add(this.maskedTextBoxSaldo);
-            this.groupBox1.Controls.Add(this.maskedTextBoxCpf);
-            this.groupBox1.Controls.Add(this.maskedTextBoxTelefone);
-            this.groupBox1.Controls.Add(this.textBoxNome);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(596, 169);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dados";
-            // 
-            // maskedTextBoxLimite
-            // 
-            this.maskedTextBoxLimite.Location = new System.Drawing.Point(102, 129);
-            this.maskedTextBoxLimite.Name = "maskedTextBoxLimite";
-            this.maskedTextBoxLimite.PromptChar = ' ';
-            this.maskedTextBoxLimite.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.maskedTextBoxLimite.Size = new System.Drawing.Size(450, 20);
-            this.maskedTextBoxLimite.TabIndex = 9;
-            // 
-            // maskedTextBoxSaldo
-            // 
-            this.maskedTextBoxSaldo.Location = new System.Drawing.Point(102, 103);
-            this.maskedTextBoxSaldo.Name = "maskedTextBoxSaldo";
-            this.maskedTextBoxSaldo.PromptChar = ' ';
-            this.maskedTextBoxSaldo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.maskedTextBoxSaldo.Size = new System.Drawing.Size(450, 20);
-            this.maskedTextBoxSaldo.TabIndex = 8;
-            // 
-            // maskedTextBoxCpf
-            // 
-            this.maskedTextBoxCpf.Location = new System.Drawing.Point(102, 77);
-            this.maskedTextBoxCpf.Name = "maskedTextBoxCpf";
-            this.maskedTextBoxCpf.Size = new System.Drawing.Size(450, 20);
-            this.maskedTextBoxCpf.TabIndex = 7;
-            // 
-            // maskedTextBoxTelefone
-            // 
-            this.maskedTextBoxTelefone.HidePromptOnLeave = true;
-            this.maskedTextBoxTelefone.Location = new System.Drawing.Point(102, 51);
-            this.maskedTextBoxTelefone.Name = "maskedTextBoxTelefone";
-            this.maskedTextBoxTelefone.Size = new System.Drawing.Size(450, 20);
-            this.maskedTextBoxTelefone.TabIndex = 6;
-            // 
-            // textBoxNome
-            // 
-            this.textBoxNome.Location = new System.Drawing.Point(102, 25);
-            this.textBoxNome.Name = "textBoxNome";
-            this.textBoxNome.Size = new System.Drawing.Size(450, 20);
-            this.textBoxNome.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 132);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Limite :";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 106);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Saldo :";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 80);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Cpf :";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 54);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Celular :";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nome :";
             // 
             // groupBox2
             // 
@@ -281,6 +178,108 @@ namespace Banco.View
             // 
             this.daoContaBindingSource.DataSource = typeof(Banco.DAL.DaoConta);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(25, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Nome :";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(25, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Celular :";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 80);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Cpf :";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(26, 106);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Saldo :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 132);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Limite :";
+            // 
+            // textBoxNome
+            // 
+            this.textBoxNome.Location = new System.Drawing.Point(102, 25);
+            this.textBoxNome.Name = "textBoxNome";
+            this.textBoxNome.Size = new System.Drawing.Size(450, 20);
+            this.textBoxNome.TabIndex = 5;
+            // 
+            // maskedTextBoxTelefone
+            // 
+            this.maskedTextBoxTelefone.HidePromptOnLeave = true;
+            this.maskedTextBoxTelefone.Location = new System.Drawing.Point(102, 51);
+            this.maskedTextBoxTelefone.Name = "maskedTextBoxTelefone";
+            this.maskedTextBoxTelefone.Size = new System.Drawing.Size(450, 20);
+            this.maskedTextBoxTelefone.TabIndex = 6;
+            // 
+            // maskedTextBoxCpf
+            // 
+            this.maskedTextBoxCpf.Location = new System.Drawing.Point(102, 77);
+            this.maskedTextBoxCpf.Name = "maskedTextBoxCpf";
+            this.maskedTextBoxCpf.Size = new System.Drawing.Size(450, 20);
+            this.maskedTextBoxCpf.TabIndex = 7;
+            // 
+            // textBoxSaldo
+            // 
+            this.textBoxSaldo.Location = new System.Drawing.Point(102, 103);
+            this.textBoxSaldo.Name = "textBoxSaldo";
+            this.textBoxSaldo.Size = new System.Drawing.Size(450, 20);
+            this.textBoxSaldo.TabIndex = 8;
+            this.textBoxSaldo.KeyPress += TextBoxSaldo_KeyPress;
+            // 
+            // textBoxLimite
+            // 
+            this.textBoxLimite.Location = new System.Drawing.Point(102, 129);
+            this.textBoxLimite.Name = "textBoxLimite";
+            this.textBoxLimite.Size = new System.Drawing.Size(450, 20);
+            this.textBoxLimite.TabIndex = 9;
+            this.textBoxLimite.KeyPress += TextBoxLimite_KeyPress;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBoxLimite);
+            this.groupBox1.Controls.Add(this.textBoxSaldo);
+            this.groupBox1.Controls.Add(this.maskedTextBoxCpf);
+            this.groupBox1.Controls.Add(this.maskedTextBoxTelefone);
+            this.groupBox1.Controls.Add(this.textBoxNome);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(13, 13);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(596, 169);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Dados";
+            // 
             // TelaContas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,40 +291,63 @@ namespace Banco.View
             this.Name = "TelaContas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TelaContas";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.daoContaBindingSource)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
-        #endregion
+        private void TextBoxLimite_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private void TextBoxSaldo_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        #endregion
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBoxNome;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonRemover;
         private System.Windows.Forms.Button buttonAlterar;
         private System.Windows.Forms.Button buttonCadastrar;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource daoContaBindingSource;
-        private System.Windows.Forms.MaskedTextBox maskedTextBoxLimite;
-        private System.Windows.Forms.MaskedTextBox maskedTextBoxSaldo;
-        private System.Windows.Forms.MaskedTextBox maskedTextBoxCpf;
-        private System.Windows.Forms.MaskedTextBox maskedTextBoxTelefone;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn Telefone;
         private System.Windows.Forms.DataGridViewTextBoxColumn CPF;
         private System.Windows.Forms.DataGridViewTextBoxColumn Saldo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Limite;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBoxNome;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxTelefone;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxCpf;
+        private System.Windows.Forms.TextBox textBoxSaldo;
+        private System.Windows.Forms.TextBox textBoxLimite;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

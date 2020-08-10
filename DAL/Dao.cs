@@ -27,7 +27,10 @@ namespace Banco.DAL
 
             ValidaCondicao(item);
 
-            using var command = new FbCommand($"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}", connection);
+            using var command = new FbCommand();
+            command.Connection = connection;
+            var commandtext = $"insert into {_nomeTabela} {item.RecebeNomeDasColunasDaTabelaParaSql()} values {item.RecebeValorDasPropriedadesParaSql()}";
+            command.CommandText = commandtext;
 
             command.ExecuteNonQuery();
         }
