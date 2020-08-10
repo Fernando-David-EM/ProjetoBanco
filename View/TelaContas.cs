@@ -20,16 +20,16 @@ namespace Banco.View
     public partial class TelaContas : Form
     {
         private DaoConta _daoConta;
-        private Conta _contaSelecionada;
-        private bool _clicado = false;
+        private Conta _contaSelecionadaDaTabela;
+        private bool _linhaDaTabelaFoiClicada = false;
+        private const bool NaoDeveGerarId = false;
+        private const bool DeveGerarId = true;
 
         public TelaContas()
         {
             InitializeComponent();
             _daoConta = new DaoConta();
-
             PopulaTable();
-
             CriaMascaras();
         }
 
@@ -77,11 +77,11 @@ namespace Banco.View
         {
             ValidaCampos();
 
-            var campos = GeraListaDeCampos(false);
+            var campos = GeraListaDeCampos(NaoDeveGerarId);
 
             _daoConta.Insere(new Conta(campos));
 
-            _clicado = false;
+            _linhaDaTabelaFoiClicada = false;
 
             PopulaTable();
         }
@@ -92,11 +92,11 @@ namespace Banco.View
             {
                 ValidaCampos();
 
-                var campos = GeraListaDeCampos(false);
+                var campos = GeraListaDeCampos(NaoDeveGerarId);
 
                 _daoConta.Insere(new Conta(campos));
 
-                _clicado = false;
+                _linhaDaTabelaFoiClicada = false;
 
                 PopulaTable();
             }
@@ -108,17 +108,17 @@ namespace Banco.View
 
         private void buttonAlterar_Click(object sender, EventArgs e)
         {
-            if (_clicado)
+            if (_linhaDaTabelaFoiClicada)
             {
                 try
                 {
                     ValidaCampos();
 
-                    var campos = GeraListaDeCampos(true);
+                    var campos = GeraListaDeCampos(DeveGerarId);
 
                     _daoConta.Atualiza(new Conta(campos));
 
-                    _clicado = false;
+                    _linhaDaTabelaFoiClicada = false;
 
                     PopulaTable();
                 }
@@ -135,15 +135,15 @@ namespace Banco.View
 
         private void buttonRemover_Click(object sender, EventArgs e)
         {
-            if (_clicado)
+            if (_linhaDaTabelaFoiClicada)
             {
                 try
                 {
-                    var campos = GeraListaDeCampos(true);
+                    var campos = GeraListaDeCampos(DeveGerarId);
 
                     _daoConta.Deleta(new Conta(campos));
 
-                    _clicado = false;
+                    _linhaDaTabelaFoiClicada = false;
 
                     PopulaTable();
                 }
@@ -180,22 +180,37 @@ namespace Banco.View
 
         private void VerificaTelefone()
         {
-            if (maskedTextBoxTelefone.Text.Length < 14)
+            if (TelefoneNaoEstaPreenchido())
             {
                 throw new CampoNaoPreenchidoException("Celular");
             }
-            if (!Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$"))
+            if (TelefoneNaoEhValido())
             {
                 throw new TelefoneInvalidoException(maskedTextBoxTelefone.Text);
             }
         }
 
+        private bool TelefoneNaoEstaPreenchido()
+        {
+            return maskedTextBoxTelefone.Text.Length < 14;
+        }
+
+        private bool TelefoneNaoEhValido()
+        {
+            return !Regex.IsMatch(maskedTextBoxTelefone.Text, "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$");
+        }
+
         private void VerificaCpf()
         {
-            if (!Util.CPF.EhCpf(maskedTextBoxCpf.Text))
+            if (CpfNaoEhValido())
             {
                 throw new CpfInvalidoException(maskedTextBoxCpf.Text);
             }
+        }
+
+        private bool CpfNaoEhValido()
+        {
+            return !Util.CPF.EhCpf(maskedTextBoxCpf.Text);
         }
 
         private Dictionary<string, string> GeraDicionarioDeCampos()
@@ -221,12 +236,12 @@ namespace Banco.View
             {
                 var cpf = PegaCpfDaTabela();
 
-                _contaSelecionada = _daoConta.PesquisaPorCpf(cpf);
+                _contaSelecionadaDaTabela = _daoConta.PesquisaPorCpf(cpf);
 
-                _clicado = true;
+                _linhaDaTabelaFoiClicada = true;
             }
 
-            PopulaCampos(_contaSelecionada);
+            PopulaCampos(_contaSelecionadaDaTabela);
         }
 
         private string PegaCpfDaTabela()
@@ -242,7 +257,7 @@ namespace Banco.View
 
             if (deveGerarId)
             {
-                campos.Add(_contaSelecionada.Id);
+                campos.Add(_contaSelecionadaDaTabela.Id);
             }
 
             campos.Add(textBoxNome.Text);

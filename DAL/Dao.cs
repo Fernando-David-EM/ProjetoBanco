@@ -59,7 +59,6 @@ namespace Banco.DAL
             using var command = new FbCommand($"delete from {_nomeTabela} where id = {item.Id}", connection);
 
             command.ExecuteNonQuery();
-
         }
 
         public List<T> PesquisaTodos()

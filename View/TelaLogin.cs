@@ -30,14 +30,19 @@ namespace Banco
 
         private void ValidaCampos()
         {
-            if (string.IsNullOrEmpty(textBoxUsuario.Text))
+            if (CampoEstaVazio(textBoxUsuario.Text))
             {
                 throw new CampoNaoPreenchidoException("Usuário");
             }
-            if (string.IsNullOrEmpty(maskedTextBoxSenha.Text))
+            if (CampoEstaVazio(maskedTextBoxSenha.Text))
             {
                 throw new CampoNaoPreenchidoException("Senha");
             }
+        }
+
+        private bool CampoEstaVazio(string campo)
+        {
+            return string.IsNullOrEmpty(campo);
         }
 
         public void TestCampos(string usuario, string senha)
